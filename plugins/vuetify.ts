@@ -1,16 +1,26 @@
-import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
 
 import { createVuetify } from "vuetify";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
+
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
+import {
+  mdiNuxt,
+  mdiPencilBoxMultipleOutline,
+  mdiPostOutline,
+  mdiArchive,
+  mdiPoll,
+  mdiCog,
+} from "@mdi/js";
+
 const customColors = {
-  caribbeanCurrent: "#006466",
-  midnightGreen: "#065a60",
-  midnightGreen2: "#0b525b",
-  midnightGreen3: "#144552",
-  charcoal: "#1b3a4b",
+  caribbeanCurrent: "#CAD2C5",
+  midnightGreen: "#84A98C",
+  midnightGreen2: "#52796F",
+  midnightGreen3: "#354F52",
+  charcoal: "#2F3E46",
   prussianBlue: "#212f45",
   spaceCadet: "#272640",
   darkPurple: "#312244",
@@ -23,6 +33,19 @@ export default defineNuxtPlugin((nuxtApp) => {
     ssr: true,
     components,
     directives,
+    icons: {
+      defaultSet: "mdi",
+      aliases: {
+        ...aliases,
+        nuxt: mdiNuxt,
+        manage: mdiPencilBoxMultipleOutline,
+        posts: mdiPostOutline,
+        archive: mdiArchive,
+        analytics: mdiPoll,
+        settings: mdiCog,
+      },
+      sets: { mdi },
+    },
     theme: {
       defaultTheme: "darkTheme",
       themes: {
