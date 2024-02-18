@@ -53,14 +53,22 @@ const format = (datetime: string): string => formatDate(datetime);
           :items="recentComments"
           item-props>
           <template #item="{ props }">
-            <v-sheet class="ma-4 pl-2 comment">
+            <v-sheet class="ma-4 mb-8 pl-2 comment">
               {{ props.content }}
-              <div class="font-weight-thin">
-                {{ props.user }} on <em>{{ props.post?.title }}</em>
-              </div>
-              <div class="text-caption">
-                {{ format(props.created as string) }}
-              </div>
+              <v-row>
+                <v-col cols="8">
+                  <div class="font-weight-thin">
+                    {{ props.user }} on <em>{{ props.post?.title }}</em>
+                  </div>
+                  <div class="text-caption">
+                    {{ format(props.created as string) }}
+                  </div>
+                </v-col>
+                <v-spacer />
+                <v-col>
+                  <v-chip>{{ props.status }}</v-chip>
+                </v-col>
+              </v-row>
             </v-sheet>
           </template>
         </v-list>
