@@ -7,12 +7,17 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 import {
-  mdiNuxt,
-  mdiPencilBoxMultipleOutline,
-  mdiPostOutline,
   mdiArchive,
-  mdiPoll,
+  mdiChevronDown,
+  mdiChevronUp,
   mdiCog,
+  mdiCommentTextOutline,
+  mdiLogout,
+  mdiMonitorDashboard,
+  mdiNuxt,
+  mdiPoll,
+  mdiPostOutline,
+  mdiSquareMedium,
 } from "@mdi/js";
 
 const customColors = {
@@ -26,6 +31,8 @@ const customColors = {
   darkPurple: "#312244",
   darkPurple2: "#3e1f47",
   palatinate: "#4d194d",
+  white: "#FFFFFF",
+  light: "#EFEFF0",
 };
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -38,28 +45,35 @@ export default defineNuxtPlugin((nuxtApp) => {
       aliases: {
         ...aliases,
         nuxt: mdiNuxt,
-        manage: mdiPencilBoxMultipleOutline,
+        dashboard: mdiMonitorDashboard,
         posts: mdiPostOutline,
+        comments: mdiCommentTextOutline,
         archive: mdiArchive,
         analytics: mdiPoll,
         settings: mdiCog,
+        divider: mdiSquareMedium,
+        chevronUp: mdiChevronUp,
+        chevronDown: mdiChevronDown,
+        logout: mdiLogout,
       },
       sets: { mdi },
     },
     theme: {
-      defaultTheme: "darkTheme",
+      defaultTheme: "lightTheme",
       themes: {
-        darkTheme: {
-          dark: true,
+        lightTheme: {
+          dark: false,
           colors: {
-            primary: customColors.caribbeanCurrent,
-            secondary: customColors.midnightGreen,
+            primary: customColors.charcoal,
+            secondary: customColors.prussianBlue,
             accent: customColors.midnightGreen2,
             info: customColors.midnightGreen3,
             success: customColors.charcoal,
-            warning: customColors.prussianBlue,
+            warning: customColors.palatinate,
             error: customColors.spaceCadet,
             anchor: customColors.darkPurple,
+            background: customColors.white,
+            "background-secondary": customColors.light,
             // You can continue to define other colors
           },
         },
