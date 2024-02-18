@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   components: [
     {
       path: `~/components`,
-      pathPrefix: false,
+      pathPrefix: true,
     },
   ],
   build: {
@@ -31,7 +31,7 @@ export default defineNuxtConfig({
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
-        config.plugins.push(vuetify({ autoImport: true }));
+        config.plugins?.push(vuetify({ autoImport: true }));
       });
     },
   ],

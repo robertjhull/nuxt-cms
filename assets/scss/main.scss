@@ -1,0 +1,18 @@
+* {
+  font-size: 1rem;
+  font-family: Georgia, sans-serif;
+}
+
+.app {
+  background-color: rgba(var(--v-theme-background-secondary));
+}
+
+a {
+  text-decoration: underline;
+  color: rgba(var(--v-theme-secondary));
+}
+
+.headline {
+  font-size: 3rem;
+  word-wrap: normal;
+}

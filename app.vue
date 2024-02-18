@@ -6,6 +6,7 @@ import { NavigationDrawer } from "#components";
 
 <template>
   <v-app class="app">
+    <nuxt-loading-indicator />
     <v-layout>
       <navigation-drawer />
       <v-container>
@@ -15,12 +16,6 @@ import { NavigationDrawer } from "#components";
   </v-app>
 </template>
 
-<style scoped lang="scss">
-.app {
-  color: white;
-  background-color: #111111;
-}
-.main-content {
-  text-align: center;
-}
+<style lang="scss">
+@use "~/assets/scss/main.scss";
 </style>
