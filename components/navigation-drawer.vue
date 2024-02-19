@@ -17,6 +17,7 @@ const { data } = await useFetch("/api/users", {
 const user = data.value as User;
 
 const navLinks = [
+  { page: "New Post", route: "/create", icon: "$new" },
   { page: "Posts", route: "/posts", icon: "$posts" },
   { page: "Comments", route: "/comments", icon: "$comments" },
   { page: "Analytics", route: "/analytics", icon: "$analytics" },
