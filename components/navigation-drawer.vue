@@ -40,7 +40,7 @@ const open = ref(false);
         class="my-4">
         <template #prepend>
           <v-avatar
-            color="secondary"
+            color="anchor"
             variant="tonal"
             class="mx-auto">
             <span>{{ initials(user.name) }}</span>
@@ -49,6 +49,7 @@ const open = ref(false);
       </v-list-item>
       <nuxt-link to="/dashboard">
         <v-list-item
+          color="primary"
           prepend-icon="$dashboard"
           link>
           Dashboard
@@ -60,6 +61,7 @@ const open = ref(false);
         :key="link.route">
         <nuxt-link :to="link.route">
           <v-list-item
+            color="primary"
             :prepend-icon="link.icon"
             link>
             {{ link.page }}
@@ -70,7 +72,7 @@ const open = ref(false);
     <template #append>
       <div class="pa-2">
         <v-btn
-          color="red"
+          color="error"
           block>
           <span
             v-if="open"

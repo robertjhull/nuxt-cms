@@ -5,19 +5,21 @@
 }
 
 .app {
-  background-color: rgba(var(--v-theme-background-secondary));
+  background-color: rgba(var(--v-theme-background-darken-1));
 }
 
 .navigation-drawer {
+  height: 100dvw;
   position: fixed;
 }
 
 a {
   text-decoration: underline;
-  color: rgba(var(--v-theme-secondary));
+  text-decoration-color: rgba(var(--v-theme-primary-darken-2));
+  color: rgba(var(--v-theme-primary-darken-2));
 }
 
 .headline {
-  font-size: 3rem;
+  font-size: 2rem;
   word-wrap: normal;
 }

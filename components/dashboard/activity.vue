@@ -16,11 +16,7 @@ const format = (datetime: string): string => formatDate(datetime);
 <template>
   <v-card class="pa-2">
     <template #prepend>
-      <div
-        color="orange-lighten-2"
-        variant="text">
-        ACTIVITY
-      </div>
+      <div variant="text">ACTIVITY</div>
     </template>
     <template #append>
       <v-card-actions>

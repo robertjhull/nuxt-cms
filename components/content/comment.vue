@@ -6,7 +6,7 @@ const dateCreated = (datetime: string): string => formatDate(datetime);
 
 const notApproved = comment.value.status != "approved";
 const trash = comment.value.status == "trash";
-const chipColor = trash ? "red" : notApproved ? "warning" : "primary";
+const chipColor = trash ? "red" : notApproved ? "warning" : "success";
 </script>
 
 <template>
@@ -34,11 +34,11 @@ const chipColor = trash ? "red" : notApproved ? "warning" : "primary";
       <v-btn
         v-if="notApproved && !trash"
         text="Approve"
-        color="green" />
+        color="success" />
       <v-btn
         v-if="!trash"
         text="Delete"
-        color="red"
+        color="error"
         append-icon="$delete" />
     </v-card-actions>
   </v-card>

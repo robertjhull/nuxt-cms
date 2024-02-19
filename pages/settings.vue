@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTheme } from "vuetify";
 import type { User } from "~/interfaces/user";
 
 const getSettings = async () => {
@@ -24,24 +25,38 @@ const updateSettings = async () => {
   });
 
   console.log(data.value);
+
+  if (data.value) {
+    toggleTheme();
+  }
 };
+
+const theme = useTheme();
+
+function toggleTheme() {
+  theme.global.name.value = userSettings.darkMode ? "dark" : "light";
+}
 </script>
 
 <template>
   <v-container>
-    <v-col cols="4 mx-auto">
-      <div class="text-h6 my-8 d-flex justify-center">Settings</div>
-      <v-form @change="updateSettings">
-        <v-text-field
-          v-model="userSettings.name"
-          label="Name" />
-        <v-text-field
-          v-model="userSettings.email"
-          label="Email" />
-        <v-switch
-          v-model="userSettings.darkMode"
-          label="Dark mode"></v-switch>
-      </v-form>
+    <v-col cols="5 mx-auto">
+      <v-card class="w-100 py-8 px-12">
+        <div class="text-h6 mb-8 d-flex justify-center">Settings</div>
+        <v-form @change="updateSettings">
+          <v-text-field
+            v-model="userSettings.name"
+            label="Name" />
+          <v-text-field
+            v-model="userSettings.email"
+            label="Email" />
+          <v-switch
+            v-model="userSettings.darkMode"
+            :label="
+              userSettings.darkMode ? 'Dark mode' : 'Light mode'
+            "></v-switch>
+        </v-form>
+      </v-card>
     </v-col>
   </v-container>
 </template>

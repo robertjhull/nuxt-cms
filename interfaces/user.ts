@@ -4,4 +4,5 @@ export interface User {
   email: string;
   posts: number;
   comments: number;
+  darkMode: boolean;
 }

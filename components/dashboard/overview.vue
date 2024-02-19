@@ -13,11 +13,7 @@ const show = ref(true);
 <template>
   <v-card class="pa-2">
     <template #prepend>
-      <div
-        color="orange-lighten-2"
-        variant="text">
-        OVERVIEW
-      </div>
+      <div variant="text">OVERVIEW</div>
     </template>
     <template #append>
       <v-card-actions>
@@ -33,7 +29,7 @@ const show = ref(true);
           <v-col>
             <v-icon
               icon="$posts"
-              color="secondary"
+              color="primary"
               class="mx-2" />
             <nuxt-link to="/posts">
               {{ user.posts }} Post{{ user.posts > 1 ? "s" : "" }}
@@ -42,10 +38,10 @@ const show = ref(true);
           <v-col>
             <v-icon
               icon="$comments"
-              color="secondary"
+              color="primary"
               class="mx-2" />
             <nuxt-link to="/comments">
-              <span class="text-secondary"
+              <span
                 >{{ user.comments }} Comment{{
                   user.comments > 1 ? "s" : ""
                 }}</span

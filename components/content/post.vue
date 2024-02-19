@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Post } from "~/interfaces/post";
 
-const post: Post = defineModel();
+const post = defineModel<Post>({ required: true });
 const { formatDate } = useFormattedDate();
 const datePublished = (datetime: string): string => formatDate(datetime);
-const isDraft = post.status == "draft";
-const statusColor = isDraft ? "warning" : "primary";
+const isDraft = post.value?.status == "draft";
+const statusColor = isDraft ? "warning" : "success";
 </script>
 
 <template>
@@ -39,9 +39,9 @@ const statusColor = isDraft ? "warning" : "primary";
             <nuxt-link to="/analytics">
               <v-icon
                 icon="$user"
-                color="secondary"
+                color="info"
                 class="mx-2" />
-              <span class="text-secondary"
+              <span class="text-info"
                 >{{ post.readers }} Reader{{
                   post.readers != 1 ? "s" : ""
                 }}</span
@@ -50,9 +50,9 @@ const statusColor = isDraft ? "warning" : "primary";
             <nuxt-link to="/comments">
               <v-icon
                 icon="$comments"
-                color="secondary"
+                color="info"
                 class="mx-2" />
-              <span class="text-secondary"
+              <span class="text-info"
                 >{{ post.comments }} Comment{{
                   post.comments > 1 ? "s" : ""
                 }}</span

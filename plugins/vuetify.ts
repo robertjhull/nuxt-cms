@@ -7,6 +7,7 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 import {
+  mdiAccount,
   mdiArchive,
   mdiChevronDown,
   mdiChevronUp,
@@ -15,25 +16,13 @@ import {
   mdiLogout,
   mdiMonitorDashboard,
   mdiNuxt,
+  mdiPencil,
+  mdiPlus,
   mdiPoll,
   mdiPostOutline,
   mdiSquareMedium,
+  mdiTrashCan,
 } from "@mdi/js";
-
-const customColors = {
-  caribbeanCurrent: "#CAD2C5",
-  midnightGreen: "#84A98C",
-  midnightGreen2: "#52796F",
-  midnightGreen3: "#354F52",
-  charcoal: "#2F3E46",
-  prussianBlue: "#212f45",
-  spaceCadet: "#272640",
-  darkPurple: "#312244",
-  darkPurple2: "#3e1f47",
-  palatinate: "#4d194d",
-  white: "#FFFFFF",
-  light: "#EFEFF0",
-};
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
@@ -55,26 +44,26 @@ export default defineNuxtPlugin((nuxtApp) => {
         chevronUp: mdiChevronUp,
         chevronDown: mdiChevronDown,
         logout: mdiLogout,
+        new: mdiPlus,
+        user: mdiAccount,
+        edit: mdiPencil,
+        delete: mdiTrashCan,
       },
       sets: { mdi },
     },
+
     theme: {
-      defaultTheme: "lightTheme",
+      defaultTheme: "light",
+      variations: {
+        colors: ["primary", "secondary", "background"],
+        lighten: 2,
+        darken: 2,
+      },
       themes: {
-        lightTheme: {
-          dark: false,
+        dark: {
+          dark: true,
           colors: {
-            primary: customColors.charcoal,
-            secondary: customColors.prussianBlue,
-            accent: customColors.midnightGreen2,
-            info: customColors.midnightGreen3,
-            success: customColors.charcoal,
-            warning: customColors.palatinate,
-            error: customColors.spaceCadet,
-            anchor: customColors.darkPurple,
-            background: customColors.white,
-            "background-secondary": customColors.light,
-            // You can continue to define other colors
+            primary: "#2fe5be",
           },
         },
       },

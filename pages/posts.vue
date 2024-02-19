@@ -24,7 +24,7 @@ const filteredPosts = computed(() => {
       class="mx-auto">
       <v-row class="justify-end pa-2 mt-2">
         <v-btn
-          color="primary"
+          color="info"
           text="Create New"
           append-icon="$new" />
       </v-row>

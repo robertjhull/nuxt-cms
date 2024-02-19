@@ -5,11 +5,7 @@ const show = ref(true);
 <template>
   <v-card class="pa-2">
     <template #prepend>
-      <div
-        color="orange-lighten-2"
-        variant="text">
-        DRAFT
-      </div>
+      <div variant="text">DRAFT</div>
     </template>
     <template #append>
       <v-card-actions>
