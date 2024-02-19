@@ -17,9 +17,9 @@ const user = data.value as User;
       sm="10"
       md="8"
       lg="6">
-      <dashboard-overview :user="user" />
-      <dashboard-activity />
-      <dashboard-drafts />
+      <overview :user="user" />
+      <activity />
+      <drafts />
     </v-col>
   </v-row>
 </template>

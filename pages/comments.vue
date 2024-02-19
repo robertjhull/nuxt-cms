@@ -1,33 +1,29 @@
 <script setup lang="ts">
-import type { Post } from "~/interfaces/post";
+import type { Comment } from "~/interfaces/comment";
 
-const { data, pending, error, refresh } = await useFetch("/api/posts");
+const { data, pending, error, refresh } = await useFetch("/api/comments");
 
-const tags = ["All", "Draft", "Published"];
+const tags = ["All", "Pending", "Approved", "Trash"];
 let selection = ref(0);
 
-const filteredPosts = computed(() => {
+const filteredComments = computed(() => {
   const filter = tags[selection.value];
 
   if (!filter || filter == "All") {
-    return data.value as Post[];
+    return data.value as Comment[];
   }
 
-  return (data.value as Post[]).filter((p) => p.status == filter.toLowerCase());
+  return (data.value as Comment[]).filter(
+    (c) => c.status == filter.toLowerCase()
+  );
 });
 </script>
 
 <template>
   <v-container>
     <v-col
-      cols="8"
+      cols="6"
       class="mx-auto">
-      <v-row class="justify-end pa-2 mt-2">
-        <v-btn
-          color="primary"
-          text="Create New"
-          append-icon="$new" />
-      </v-row>
       <v-row class="justify-center">
         <v-chip-group
           mandatory
@@ -46,9 +42,9 @@ const filteredPosts = computed(() => {
           <template v-else-if="error"> {{ error }}</template>
           <template
             v-else
-            v-for="(post, index) in filteredPosts"
-            :key="post.id">
-            <post v-model="filteredPosts[index]" />
+            v-for="(comment, index) in filteredComments"
+            :key="comment.id">
+            <comment v-model="filteredComments[index]" />
           </template>
         </v-col>
       </v-row>
