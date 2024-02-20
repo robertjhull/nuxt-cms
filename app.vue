@@ -11,6 +11,7 @@ import { NavigationDrawer } from "#components";
       <navigation-drawer />
       <v-container>
         <nuxt-page />
+        <theme-toggle />
       </v-container>
     </v-layout>
   </v-app>
