@@ -21,11 +21,12 @@ const navLinks = [
   { page: "Posts", route: "/posts", icon: "$posts" },
   { page: "Comments", route: "/comments", icon: "$comments" },
   { page: "Analytics", route: "/analytics", icon: "$analytics" },
-  { page: "Settings", route: "/settings", icon: "$settings" },
+  { page: "Appearance", route: "/appearance", icon: "$appearance" },
 ];
 
 const open = ref(false);
 </script>
+
 <template>
   <v-navigation-drawer
     location="left"
@@ -60,7 +61,9 @@ const open = ref(false);
       <template
         v-for="link in navLinks"
         :key="link.route">
-        <nuxt-link :to="link.route">
+        <nuxt-link
+          class="nav-link"
+          :to="link.route">
           <v-list-item
             color="primary"
             :prepend-icon="link.icon"

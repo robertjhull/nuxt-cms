@@ -16,6 +16,10 @@ a {
   text-decoration: underline;
   text-decoration-color: rgba(var(--v-theme-primary-darken-2));
   color: rgba(var(--v-theme-primary-darken-2));
+
+  &.nav-link {
+    text-decoration: none;
+  }
 }
 
 .headline {
