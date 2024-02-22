@@ -1,6 +1,23 @@
 <script setup lang="ts">
 import ExtendedEditor from "~/utils/tiptapEditor";
-const editor = new ExtendedEditor("<p>Start typing here...</p>");
+
+let content = "<p>Start typing here...</p>";
+const route = useRoute();
+
+const loadDraft = async () => {
+  if (!route.params.id) {
+    return null;
+  }
+
+  const { data } = await useFetch("/api/posts", {
+    method: "get",
+    query: { id: route.params.id },
+  });
+
+  content = data.value as string;
+};
+
+const editor = new ExtendedEditor(content);
 </script>
 
 <template>

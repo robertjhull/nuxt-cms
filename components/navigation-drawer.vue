@@ -17,10 +17,9 @@ const { data } = await useFetch("/api/users", {
 const user = data.value as User;
 
 const navLinks = [
-  { page: "New Post", route: "/create", icon: "$new" },
+  { page: "Create", route: "/create", icon: "$new" },
   { page: "Posts", route: "/posts", icon: "$posts" },
   { page: "Comments", route: "/comments", icon: "$comments" },
-  { page: "Analytics", route: "/analytics", icon: "$analytics" },
   { page: "Appearance", route: "/appearance", icon: "$appearance" },
 ];
 
@@ -49,7 +48,9 @@ const open = ref(false);
           </v-avatar>
         </template>
       </v-list-item>
-      <nuxt-link to="/dashboard">
+      <nuxt-link
+        class="nav-link"
+        to="/dashboard">
         <v-list-item
           color="primary"
           prepend-icon="$dashboard"
