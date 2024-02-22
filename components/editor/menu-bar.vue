@@ -3,7 +3,7 @@
     <div
       class="divider"
       v-if="item.type === 'divider'"
-      :key="`divider${index}`" />
+      :key="`divider${index}`"></div>
     <menu-item
       v-else
       :key="index"
@@ -114,12 +114,14 @@ const items = [
     icon: "$textWrap",
     title: "Hard Break",
     action: () => props.editor.chain().focus().setHardBreak().run(),
+    isActive: () => false,
   },
   {
     icon: "$formatClear",
     title: "Clear Format",
     action: () =>
       props.editor.chain().focus().clearNodes().unsetAllMarks().run(),
+    isActive: () => false,
   },
   {
     type: "divider",
@@ -128,11 +130,13 @@ const items = [
     icon: "$undo",
     title: "Undo",
     action: () => props.editor.chain().focus().undo().run(),
+    isActive: () => false,
   },
   {
     icon: "$redo",
     title: "Redo",
     action: () => props.editor.chain().focus().redo().run(),
+    isActive: () => false,
   },
 ];
 </script>

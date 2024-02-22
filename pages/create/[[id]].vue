@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { Post } from "~/interfaces/post";
 import ExtendedEditor from "~/utils/tiptapEditor";
 
-let content = "<p>Start typing here...</p>";
+const content = ref({ content: "<p>Start typing here...</p>" });
 const route = useRoute();
 
 const loadDraft = async () => {
-  if (!route.params.id) {
+  console.log(route.params);
+  if (!route) {
     return null;
   }
 
@@ -14,10 +16,17 @@ const loadDraft = async () => {
     query: { id: route.params.id },
   });
 
-  content = data.value as string;
+  if (data.value) {
+    content.value = (data.value as Post[])[0];
+  }
 };
 
-const editor = new ExtendedEditor(content);
+await loadDraft();
+
+let editor: ExtendedEditor | null = null;
+onMounted(() => {
+  editor = new ExtendedEditor(content.value);
+});
 </script>
 
 <template>

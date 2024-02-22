@@ -1,11 +1,10 @@
 <script setup lang="ts">
 interface MenuItemProps {
   type?: string | undefined;
-  color?: string | undefined;
-  icon: string;
-  title: string;
-  action: () => void;
-  isActive: () => boolean;
+  icon?: string | undefined;
+  title?: string | undefined;
+  action?: () => void;
+  isActive?: () => boolean;
 }
 
 defineProps<MenuItemProps>();
