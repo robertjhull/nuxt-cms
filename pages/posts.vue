@@ -22,23 +22,28 @@ const filteredPosts = computed(() => {
     <v-col
       cols="8"
       class="mx-auto">
-      <v-row class="justify-end pa-2 mt-2">
-        <v-btn
-          color="info"
-          text="Create New"
-          append-icon="$new" />
-      </v-row>
-      <v-row class="justify-center">
-        <v-chip-group
-          mandatory
-          v-model="selection"
-          selected-class="bg-primary">
-          <v-chip
-            v-for="tag in tags"
-            :key="tag">
-            {{ tag }}
-          </v-chip>
-        </v-chip-group>
+      <v-row class="justify-center align-center">
+        <v-spacer />
+        <v-col>
+          <v-chip-group
+            mandatory
+            v-model="selection"
+            selected-class="bg-primary">
+            <v-chip
+              v-for="tag in tags"
+              :key="tag">
+              {{ tag }}
+            </v-chip>
+          </v-chip-group>
+        </v-col>
+        <v-col>
+          <nuxt-link to="/appearance">
+            <v-btn
+              color="info"
+              text="Create New"
+              append-icon="$new" />
+          </nuxt-link>
+        </v-col>
       </v-row>
       <v-row>
         <v-col class="d-flex flex-column main-content ga-4">

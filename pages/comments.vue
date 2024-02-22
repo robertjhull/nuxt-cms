@@ -4,7 +4,7 @@ import type { Comment } from "~/interfaces/comment";
 const { data, pending, error, refresh } = await useFetch("/api/comments");
 
 const tags = ["All", "Pending", "Approved", "Trash"];
-let selection = ref(0);
+const selection = ref();
 
 const filteredComments = computed(() => {
   const filter = tags[selection.value];
@@ -17,6 +17,8 @@ const filteredComments = computed(() => {
     (c) => c.status == filter.toLowerCase()
   );
 });
+
+onMounted(() => (selection.value = 0));
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const filteredComments = computed(() => {
     <v-col
       cols="6"
       class="mx-auto">
-      <v-row class="justify-center">
+      <v-row class="justify-center align center">
         <v-chip-group
           mandatory
           v-model="selection"
