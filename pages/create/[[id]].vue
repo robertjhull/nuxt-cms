@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Post } from "~/interfaces/post";
+import type { Draft, Post } from "~/interfaces/post";
 import ExtendedEditor from "~/utils/tiptapEditor";
 
-const content = ref({ content: "<p>Start typing here...</p>" });
+const draft = ref<Draft | Post>({ content: "<p>Start typing here...</p>" });
 const route = useRoute();
 
 const loadDraft = async () => {
@@ -17,7 +17,7 @@ const loadDraft = async () => {
   });
 
   if (data.value) {
-    content.value = (data.value as Post[])[0];
+    draft.value = (data.value as Post[])[0];
   }
 };
 
@@ -25,7 +25,7 @@ await loadDraft();
 
 let editor: ExtendedEditor | null = null;
 onMounted(() => {
-  editor = new ExtendedEditor(content.value);
+  editor = new ExtendedEditor(draft.value);
 });
 </script>
 

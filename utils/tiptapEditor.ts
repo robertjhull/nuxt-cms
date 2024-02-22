@@ -5,7 +5,7 @@ import Image from "@tiptap/extension-image";
 import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import { Editor } from "@tiptap/vue-3";
-import type { Post } from "~/interfaces/post";
+import type { Draft, Post } from "~/interfaces/post";
 
 export default class ExtendedEditor extends Editor {
   title?: string | null;
@@ -16,7 +16,7 @@ export default class ExtendedEditor extends Editor {
   /**
    *
    */
-  constructor(post: Post) {
+  constructor(post: Post | Draft) {
     super({
       content: post.content,
       extensions: [

@@ -1,7 +1,14 @@
 import type { User } from "./user";
 
+export interface Draft {
+  title?: string | undefined;
+  subtitle?: string | undefined;
+  content: string;
+  status?: "draft" | undefined;
+}
+
 export interface Post {
-  id: string;
+  id: number;
   title: string;
   subtitle: string;
   header_img: string;
