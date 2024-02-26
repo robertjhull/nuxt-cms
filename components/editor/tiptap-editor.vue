@@ -32,6 +32,12 @@ const theme = useTheme();
           }">
           <div class="d-flex justify-space-between">
             <v-btn
+              color="info"
+              text="Preview"
+              variant="flat"
+              class="mx-2"
+              @click="editor.preview" />
+            <v-btn
               color="warning"
               text="Save draft"
               variant="flat"
@@ -42,7 +48,7 @@ const theme = useTheme();
               variant="flat"
               text="Publish"
               class="mx-2"
-              @click="editor.publish" />
+              disabled />
           </div>
           <div class="my-5">
             <v-text-field

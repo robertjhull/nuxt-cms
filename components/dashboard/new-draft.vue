@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
-
-import { mdiNote } from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp, mdiNote } from "@mdi/js";
 
 const router = useRouter();
 const show = ref(true);
@@ -9,14 +7,8 @@ const title = ref("");
 const content = ref("");
 
 const saveDraft = async () => {
-  const { data: success } = await useFetch("/api/draft", {
-    method: "post",
-    body: { title, content },
-  });
-
-  if (success.value) {
-    router.push("/posts");
-  }
+  // save in local store
+  router.push("/posts");
 };
 </script>
 

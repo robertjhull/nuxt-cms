@@ -2,11 +2,9 @@
 import { mdiChevronDown, mdiChevronUp, mdiCommentTextOutline } from "@mdi/js";
 import type { Post } from "~/interfaces";
 
+const recentlyPublished = defineModel<Post[]>({ required: true });
+
 const show = ref(true);
-const { data } = await useFetch("/api/activity");
-const { recentlyPublished } = data.value as {
-  recentlyPublished: Post[];
-};
 
 const { formatLongDate } = useFormattedDate();
 const format = (datetime: string): string => formatLongDate(datetime);

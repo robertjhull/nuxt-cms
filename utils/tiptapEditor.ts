@@ -5,7 +5,7 @@ import Image from "@tiptap/extension-image";
 import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import { Editor } from "@tiptap/vue-3";
-import type { Draft, Post } from "~/interfaces/post";
+import type { Post } from "~/interfaces";
 
 export default class ExtendedEditor extends Editor {
   title?: string | null;
@@ -13,7 +13,7 @@ export default class ExtendedEditor extends Editor {
   loading: boolean = false;
   error: string[] = [];
 
-  constructor(post: Post | Draft) {
+  constructor(post: Post | Partial<Post>) {
     super({
       content: post.content,
       extensions: [
@@ -50,17 +50,9 @@ export default class ExtendedEditor extends Editor {
       content: this.getHTML(),
     };
 
-    const { data, error } = await useFetch("/api/posts", {
-      method: "post",
-      body: newDraft,
-    });
-
-    if (error.value) {
-      this.error.push(error.value.message);
-    }
-
-    return data.value as boolean;
+    // save to store
+    return true;
   }
 
-  publish() {}
+  preview() {}
 }

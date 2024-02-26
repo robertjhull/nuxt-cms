@@ -2,7 +2,7 @@
 import { mdiMagnify, mdiPencil, mdiPlusThick } from "@mdi/js";
 import type { Post } from "~/interfaces";
 
-const { data, pending, error } = await useFetch("/api/posts");
+const { data, pending, error } = await useFetch("/api/posts", { lazy: true });
 
 const tags = ["All", "Draft", "Published"];
 let selection = ref();

@@ -10,11 +10,6 @@ const settings = ref({
   headerImage: "",
 });
 
-const { data } = await useFetch("/api/settings/", {
-  method: "get",
-  params: { id: "<id>" },
-});
-
 const color = ref("#FFA000");
 
 const fontOptions = [
@@ -25,11 +20,16 @@ const fontOptions = [
 ];
 
 const saveAppearanceSettings = async () => {
-  await useFetch("/api/settings", {
+  await $fetch("/api/settings", {
     method: "patch",
-    body: { id: "<id>", ...settings.value },
+    body: { id: "e95155db-412e-4e48-a8a4-302b73ec4beb", ...settings.value },
   });
 };
+
+const { data } = await useFetch("/api/settings/", {
+  method: "get",
+  params: { id: "e95155db-412e-4e48-a8a4-302b73ec4beb" },
+});
 
 onMounted(() => {
   if (data.value) {
@@ -59,6 +59,7 @@ onMounted(() => {
             <!-- Header Image Upload -->
             <v-text-field
               v-model="settings.headerImage"
+              disabled
               label="Link to Header Image" />
 
             <!-- Font Family -->

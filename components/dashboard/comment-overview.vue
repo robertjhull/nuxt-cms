@@ -2,12 +2,9 @@
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import type { Comment } from "~/interfaces";
 
-const show = ref(true);
+const recentComments = defineModel<Comment[]>({ required: true });
 
-const { data } = await useFetch("/api/activity");
-const { recentComments } = data.value as {
-  recentComments: Comment[];
-};
+const show = ref(true);
 
 const statusColor = (status: string) => {
   return status == "trash"

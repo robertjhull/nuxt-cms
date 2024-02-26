@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { User } from "~/interfaces";
 
-// testing
 const { data } = await useFetch("/api/users", {
   method: "POST",
   body: { id: "e95155db-412e-4e48-a8a4-302b73ec4beb" },
@@ -22,10 +21,10 @@ const user = data.value as User;
       <v-row>
         <v-col class="d-flex flex-column ga-10">
           <project-summary />
-          <comment-overview :user="user" />
+          <comment-overview v-model="user.comments" />
         </v-col>
         <v-col class="d-flex flex-column ga-10 mb-10">
-          <post-overview :user="user" />
+          <post-overview v-model="user.posts" />
           <new-draft />
         </v-col>
       </v-row>

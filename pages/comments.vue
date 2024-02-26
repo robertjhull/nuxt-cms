@@ -2,7 +2,9 @@
 import { mdiCheck, mdiChevronDown, mdiChevronUp, mdiTrashCan } from "@mdi/js";
 import type { Comment } from "~/interfaces";
 
-const { data, pending, error } = await useFetch("/api/comments");
+const { data, pending, error } = await useFetch("/api/comments", {
+  lazy: true,
+});
 
 const tags = ["All", "Pending", "Approved", "Trash"];
 const selection = ref();
@@ -41,6 +43,28 @@ const headers = [
 
 const { formatShortDate } = useFormattedDate();
 const datePosted = (datetime: string): string => formatShortDate(datetime);
+
+const approveComment = async (comment: Comment) => {
+  const success = await $fetch("/api/comments", {
+    method: "patch",
+    body: { commentId: comment.id, status: "approved" },
+  });
+
+  if (success) {
+    comment.status = "approved";
+  }
+};
+
+const deleteComment = async (comment: Comment) => {
+  const success = await $fetch("/api/comments", {
+    method: "patch",
+    body: { commentId: comment.id, status: "trash" },
+  });
+
+  if (success) {
+    comment.status = "trash";
+  }
+};
 
 onMounted(() => (selection.value = 0));
 </script>
@@ -113,12 +137,14 @@ onMounted(() => (selection.value = 0));
                     v-if="item.status == 'pending'"
                     color="success"
                     variant="plain"
-                    :icon="mdiCheck" />
+                    :icon="mdiCheck"
+                    @click="approveComment(item)" />
                   <v-btn
                     v-if="item.status != 'trash'"
                     variant="plain"
                     color="error"
-                    :icon="mdiTrashCan" />
+                    :icon="mdiTrashCan"
+                    @click="deleteComment(item)" />
                   <v-btn
                     variant="plain"
                     :icon="
