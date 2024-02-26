@@ -7,6 +7,7 @@ import {
   mdiPlusThick,
   mdiPostOutline,
 } from "@mdi/js";
+import { useTheme } from "vuetify";
 
 const navLinks = [
   { page: "Dashboard", route: "/dashboard", icon: mdiMonitorDashboard },
@@ -17,13 +18,17 @@ const navLinks = [
   { page: "Comments", route: "/comments", icon: mdiCommentTextOutline },
   { page: "Appearance", route: "/appearance", icon: mdiPaletteAdvanced },
 ];
+
+const theme = useTheme();
 </script>
 
 <template>
   <v-navigation-drawer
     location="left"
     width="250"
-    color="background-darken-8"
+    :color="
+      theme.current.value.dark ? 'background-lighten-1' : 'background-darken-1'
+    "
     class="navigation-drawer">
     <v-list>
       <template
@@ -34,9 +39,10 @@ const navLinks = [
           class="my-4" />
         <nuxt-link
           v-else
-          class="nav-link text-white"
+          class="nav-link"
           :to="link.route">
           <v-list-item
+            :class="theme.current.value.dark ? 'text-white' : 'text-black'"
             :prepend-icon="link.icon"
             link>
             {{ link.page }}

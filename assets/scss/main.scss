@@ -3,10 +3,6 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.app {
-  background-color: rgba(var(--v-theme-background-darken-1));
-}
-
 .navigation-drawer {
   height: 100dvw;
   position: fixed;
@@ -14,8 +10,13 @@
 
 a {
   text-decoration: underline;
-  text-decoration-color: rgba(var(--v-theme-primary-darken-2));
-  color: rgba(var(--v-theme-primary-darken-2));
+  text-decoration-color: rgba(var(--v-theme-primary));
+  color: rgba(var(--v-theme-primary));
+
+  &:hover {
+    color: rgba(var(--v-theme-primary-lighten-2));
+    text-decoration-color: rgba(var(--v-theme-primary-lighten-2));
+  }
 
   &.nav-link {
     text-decoration: none;
