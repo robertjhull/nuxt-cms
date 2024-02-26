@@ -10,16 +10,24 @@ const user = data.value as User;
 </script>
 
 <template>
-  <v-row class="d-flex justify-center mb-6">
+  <v-row class="d-flex justify-center mt-6">
     <v-col
-      class="d-flex flex-column main-content ga-10"
+      class="d-flex flex-column main-content"
       cols="12"
-      sm="10"
-      md="8"
-      lg="6">
-      <overview :user="user" />
-      <activity />
-      <drafts />
+      sm="12"
+      md="10"
+      lg="8"
+      xl="8">
+      <v-row>
+        <v-col class="d-flex flex-column ga-10">
+          <project-summary />
+          <comment-overview :user="user" />
+        </v-col>
+        <v-col class="d-flex flex-column ga-10">
+          <post-overview :user="user" />
+          <new-draft />
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
