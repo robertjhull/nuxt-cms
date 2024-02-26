@@ -1,72 +1,77 @@
 <script setup lang="ts">
-import { mdiNote } from "@mdi/js";
 import { EditorContent } from "@tiptap/vue-3";
+import { useTheme } from "vuetify";
 import type ExtendedEditor from "~/utils/tiptapEditor";
 
 const editor = defineModel<ExtendedEditor>("editor", { required: true });
+
+const theme = useTheme();
 </script>
 
 <template>
-  <v-row>
-    <v-col
-      cols="8"
-      class="mx-auto">
-      <v-sheet
-        class="editor my-10"
-        elevation="10">
-        <v-row
-          class="header d-flex align-center py-4"
-          no-gutters>
-          <v-text-field
-            :model-value="editor.title"
-            class="mx-4"
-            bg-color="background"
-            label="Title"
-            variant="solo"
-            width="75px"
-            hide-details />
-          <v-btn
-            class="mx-2"
-            color="info"
-            variant="flat"
-            text="Preview"
-            @click="editor.preview" />
-          <v-btn
-            class="mx-2"
-            color="warning"
-            text="Save draft"
-            variant="flat"
-            :prepend-icon="mdiNote"
-            @click="editor.saveDraft" />
-          <v-btn
-            class="mx-2"
-            color="success"
-            variant="flat"
-            text="Publish"
-            @click="editor.publish" />
-        </v-row>
-        <v-row
-          class="header d-flex justify-space-around"
-          no-gutters>
-          <menu-bar :editor="editor" />
-        </v-row>
-        <v-row class="pa-10">
-          <editor-content :editor="editor" />
-        </v-row>
-      </v-sheet>
-    </v-col>
+  <v-row
+    no-gutters
+    class="fill-height">
+    <v-sheet class="bg-background-darken-3">
+      <v-row
+        no-gutters
+        class="fill-height">
+        <v-col cols="9">
+          <v-sheet
+            class="my-12 mx-16 pa-12 editor"
+            elevation="10">
+            <editor-content :editor="editor" />
+          </v-sheet>
+        </v-col>
+        <v-col
+          cols="3"
+          class="pa-4 d-flex flex-column"
+          :class="{
+            'bg-background-lighten-1': theme.current.value.dark,
+            'bg-background-darken-1': !theme.current.value.dark,
+          }">
+          <div class="d-flex justify-space-between">
+            <v-btn
+              color="warning"
+              text="Save draft"
+              variant="flat"
+              class="mx-2"
+              @click="editor.saveDraft" />
+            <v-btn
+              color="success"
+              variant="flat"
+              text="Publish"
+              class="mx-2"
+              @click="editor.publish" />
+          </div>
+          <div class="my-5">
+            <v-text-field
+              :model-value="editor.title"
+              bg-color="background"
+              label="Title"
+              variant="solo"
+              class="ma-2"
+              hide-details />
+            <v-text-field
+              :model-value="editor.subtitle"
+              bg-color="background"
+              label="Subtitle"
+              variant="solo"
+              class="mt-6 mx-2"
+              hide-details />
+          </div>
+          <div class="px-2">
+            <menu-bar :editor="editor" />
+          </div>
+        </v-col>
+      </v-row>
+    </v-sheet>
   </v-row>
 </template>
 
 <style lang="scss">
 .editor {
-  width: 100%;
-  min-height: calc(100vh - 75px);
-  color: #0d0d0d;
-
-  .header {
-    background-color: rgba(var(--v-theme-background-darken-8));
-  }
+  min-height: 90vh;
 }
 
 .tiptap {

@@ -32,7 +32,7 @@ onMounted(() => {
 <template>
   <v-container
     fluid
-    class="pa-0">
+    class="pa-0 ma-0 fill-height">
     <client-only placeholder="loading...">
       <tiptap-editor :editor="editor" />
     </client-only>

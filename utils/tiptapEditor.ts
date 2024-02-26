@@ -13,9 +13,6 @@ export default class ExtendedEditor extends Editor {
   loading: boolean = false;
   error: string[] = [];
 
-  /**
-   *
-   */
   constructor(post: Post | Draft) {
     super({
       content: post.content,
@@ -65,5 +62,5 @@ export default class ExtendedEditor extends Editor {
     return data.value as boolean;
   }
 
-  preview() {}
+  publish() {}
 }

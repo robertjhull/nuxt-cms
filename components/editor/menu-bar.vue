@@ -126,6 +126,7 @@ const items = [
       props.editor.chain().focus().clearNodes().unsetAllMarks().run(),
     isActive: () => false,
   },
+  { type: "divider" },
   {
     icon: mdiArrowULeftTop,
     title: "Undo",
@@ -142,21 +143,18 @@ const items = [
 </script>
 
 <template>
-  <template v-for="(item, index) in items">
-    <div
-      class="divider"
-      v-if="item.type === 'divider'"
-      :key="`divider${index}`"></div>
-    <menu-item
-      v-else
-      :key="index"
-      v-bind="item" />
-  </template>
+  <v-row
+    no-gutters
+    class="w-100">
+    <template v-for="(item, index) in items">
+      <v-divider
+        class="my-2"
+        v-if="item.type === 'divider'"
+        :key="`divider${index}`"></v-divider>
+      <menu-item
+        v-else
+        :key="index"
+        v-bind="item" />
+    </template>
+  </v-row>
 </template>
-
-<style lang="scss">
-.divider {
-  background-color: rgba(#fff, 0.25);
-  height: 50%;
-}
-</style>
