@@ -15,10 +15,6 @@ const { data } = await useFetch("/api/settings/", {
   params: { id: "<id>" },
 });
 
-if (data.value) {
-  Object.assign(settings.value, data.value);
-}
-
 const color = ref("#FFA000");
 
 const fontOptions = [
@@ -34,6 +30,12 @@ const saveAppearanceSettings = async () => {
     body: { id: "<id>", ...settings.value },
   });
 };
+
+onMounted(() => {
+  if (data.value) {
+    Object.assign(settings.value, data.value);
+  }
+});
 </script>
 
 <template>
@@ -149,7 +151,7 @@ const saveAppearanceSettings = async () => {
   </v-container>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .preview-pane {
   height: 70vh;
   white-space: wrap;

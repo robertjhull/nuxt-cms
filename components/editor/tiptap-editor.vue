@@ -12,7 +12,7 @@ const theme = useTheme();
   <v-row
     no-gutters
     class="fill-height">
-    <v-sheet class="bg-background-darken-3">
+    <v-sheet class="bg-background-darken-3 w-100">
       <v-row
         no-gutters
         class="fill-height">
@@ -69,7 +69,7 @@ const theme = useTheme();
   </v-row>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .editor {
   min-height: 90vh;
 }

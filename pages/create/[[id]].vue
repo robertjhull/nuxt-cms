@@ -6,8 +6,7 @@ const draft = ref<Partial<Post>>({ content: "<p>Start typing here...</p>" });
 const route = useRoute();
 
 const loadDraft = async () => {
-  console.log(route.params);
-  if (!route) {
+  if (!route || !route.params.id) {
     return null;
   }
 

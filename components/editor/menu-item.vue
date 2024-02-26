@@ -20,7 +20,7 @@ defineProps<MenuItemProps>();
   </button>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .menu-item {
   background: transparent;
   border: none;
