@@ -21,7 +21,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       defaultTheme: "light",
       variations: {
         colors: ["primary", "secondary", "background"],
-        lighten: 0,
+        lighten: 10,
         darken: 10,
       },
     },
