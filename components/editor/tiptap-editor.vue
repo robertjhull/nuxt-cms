@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiNote } from "@mdi/js";
 import { EditorContent } from "@tiptap/vue-3";
 import type ExtendedEditor from "~/utils/tiptapEditor";
 
@@ -6,81 +7,65 @@ const editor = defineModel<ExtendedEditor>("editor", { required: true });
 </script>
 
 <template>
-  <v-container v-if="editor">
-    <v-sheet
-      class="editor"
-      elevation="5">
-      <v-row
-        class="editor__header"
-        no-gutters>
-        <menu-bar :editor="editor" />
-      </v-row>
-      <v-row
-        class="editor__subheader w-100"
-        no-gutters>
-        <v-form class="d-flex align-center justify-space-evenly w-100 py-2">
+  <v-row>
+    <v-col
+      cols="8"
+      class="mx-auto">
+      <v-sheet
+        class="editor my-10"
+        elevation="10">
+        <v-row
+          class="header d-flex align-center py-4"
+          no-gutters>
           <v-text-field
             :model-value="editor.title"
             class="mx-4"
             bg-color="background"
-            color="primary-darken-2"
             label="Title"
             variant="solo"
+            width="75px"
             hide-details />
           <v-btn
-            class="mx-4"
+            class="mx-2"
             color="info"
-            text="Preview" />
+            variant="flat"
+            text="Preview"
+            @click="editor.preview" />
           <v-btn
-            class="mx-4"
+            class="mx-2"
             color="warning"
             text="Save draft"
-            prepend-icon="$note" />
-        </v-form>
-      </v-row>
-      <v-row
-        class="editor__content d-flex"
-        no-gutters>
-        <editor-content :editor="editor" />
-      </v-row>
-    </v-sheet>
-  </v-container>
+            variant="flat"
+            :prepend-icon="mdiNote"
+            @click="editor.saveDraft" />
+          <v-btn
+            class="mx-2"
+            color="success"
+            variant="flat"
+            text="Publish"
+            @click="editor.publish" />
+        </v-row>
+        <v-row
+          class="header d-flex justify-space-around"
+          no-gutters>
+          <menu-bar :editor="editor" />
+        </v-row>
+        <v-row class="pa-10">
+          <editor-content :editor="editor" />
+        </v-row>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
 
 <style lang="scss">
 .editor {
-  $main-editor-color: rgba(var(--v-theme-background-darken-4));
-
   width: 100%;
-  height: 90vh;
-  border-radius: 0.75rem;
-  background-color: rgba(var(--v-theme-background));
-  border: 3px solid $main-editor-color;
+  min-height: calc(100vh - 75px);
   color: #0d0d0d;
-  display: flex;
-  flex-direction: column;
 
-  &__header {
-    background: $main-editor-color;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    display: flex;
-    flex: 0 0 auto;
-    padding: 0.4rem 0.25rem;
-  }
-
-  &__subheader {
-    background: $main-editor-color;
-    flex: 0 0 auto;
-  }
-
-  &__content {
-    flex: 1 1 auto;
-    text-overflow: wrap;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 2rem;
-    -webkit-overflow-scrolling: touch;
+  .header {
+    background-color: rgba(var(--v-theme-background-darken-8));
   }
 }
 

@@ -1,16 +1,3 @@
-<template>
-  <template v-for="(item, index) in items">
-    <div
-      class="divider"
-      v-if="item.type === 'divider'"
-      :key="`divider${index}`"></div>
-    <menu-item
-      v-else
-      :key="index"
-      v-bind="item" />
-  </template>
-</template>
-
 <script setup lang="ts">
 import ExtendedEditor from "~/utils/tiptapEditor";
 
@@ -108,9 +95,6 @@ const items = [
     isActive: () => props.editor.isActive("blockquote"),
   },
   {
-    type: "divider",
-  },
-  {
     icon: "$textWrap",
     title: "Hard Break",
     action: () => props.editor.chain().focus().setHardBreak().run(),
@@ -122,9 +106,6 @@ const items = [
     action: () =>
       props.editor.chain().focus().clearNodes().unsetAllMarks().run(),
     isActive: () => false,
-  },
-  {
-    type: "divider",
   },
   {
     icon: "$undo",
@@ -141,11 +122,22 @@ const items = [
 ];
 </script>
 
+<template>
+  <template v-for="(item, index) in items">
+    <div
+      class="divider"
+      v-if="item.type === 'divider'"
+      :key="`divider${index}`"></div>
+    <menu-item
+      v-else
+      :key="index"
+      v-bind="item" />
+  </template>
+</template>
+
 <style lang="scss">
 .divider {
   background-color: rgba(#fff, 0.25);
   height: 50%;
-  margin: auto 0.5rem;
-  width: 1px;
 }
 </style>

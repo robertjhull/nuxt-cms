@@ -12,7 +12,7 @@ defineProps<MenuItemProps>();
 
 <template>
   <button
-    class="menu-item pa-1 ma-1"
+    class="menu-item pa-2 ma-1"
     :class="{ 'is-active': isActive ? isActive() : null }"
     @click="action"
     :title="title">
