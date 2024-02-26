@@ -1,3 +1,4 @@
+import type { Comment } from "./comment";
 import type { User } from "./user";
 
 export interface Draft {
@@ -11,13 +12,10 @@ export interface Post {
   id: number;
   title: string;
   subtitle: string;
-  header_img: string;
-  img: any[];
   author: User;
   content: string;
-  comments: number;
+  comments: Comment[];
   created: string;
   published: string;
   status: "draft" | "published";
-  readers: number;
 }

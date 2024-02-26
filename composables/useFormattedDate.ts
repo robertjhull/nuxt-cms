@@ -5,7 +5,7 @@ export default function () {
     return date;
   };
 
-  const formatDate = (datetime: string) => {
+  const formatLongDate = (datetime: string) => {
     return new Intl.DateTimeFormat("en-US", {
       month: "long",
       day: "numeric",
@@ -16,5 +16,16 @@ export default function () {
     }).format(parse(datetime));
   };
 
-  return { formatDate };
+  const formatShortDate = (datetime: string) => {
+    return new Intl.DateTimeFormat("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    }).format(parse(datetime));
+  };
+
+  return { formatShortDate, formatLongDate };
 }
