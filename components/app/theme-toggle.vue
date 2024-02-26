@@ -24,7 +24,7 @@ const toggleTheme = () => {
 <style scoped lang="scss">
 .theme-toggle {
   position: fixed;
-  top: 1rem;
+  bottom: 1rem;
   right: 1rem;
   pointer-events: auto !important;
   cursor: pointer !important;
