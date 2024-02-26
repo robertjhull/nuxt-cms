@@ -4,7 +4,7 @@ import type { Post } from "~/interfaces/post";
 import type { Settings } from "~/interfaces/settings";
 
 const route = useRoute();
-const slug = route.params.slug;
+const id = route.params.id;
 const appearanceSettings = ref<Settings>({} as Settings);
 const publishedPosts = ref<Post[]>([]);
 
@@ -22,7 +22,7 @@ const {
   pending,
   error,
 } = useFetch("/api/posts", {
-  params: { id: slug ? slug : null },
+  params: { id: id ? id : null },
 });
 
 if (posts.value) {
