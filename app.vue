@@ -5,7 +5,7 @@ import { NavigationDrawer } from "#components";
 
 const route = useRoute();
 
-const showNavBar = computed(() => {
+const showAppBar = computed(() => {
   return !route.path.toLowerCase().includes("preview");
 });
 </script>
@@ -14,11 +14,11 @@ const showNavBar = computed(() => {
   <v-app class="app">
     <nuxt-loading-indicator />
     <v-layout>
-      <navigation-drawer v-if="showNavBar" />
-      <v-container>
+      <navigation-drawer v-if="showAppBar" />
+      <v-main>
         <nuxt-page />
-        <theme-toggle />
-      </v-container>
+        <theme-toggle v-if="showAppBar" />
+      </v-main>
     </v-layout>
   </v-app>
 </template>
