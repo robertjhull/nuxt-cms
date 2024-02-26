@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
-import type { Comment } from "~/interfaces/comment";
+import type { Comment } from "~/interfaces";
 
 const show = ref(true);
 

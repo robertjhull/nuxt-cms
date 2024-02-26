@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Post } from "~/interfaces/post";
-import type { Settings } from "~/interfaces/settings";
+import type { Post, Settings } from "~/interfaces";
 
 const post = defineModel<Post>({ required: true });
 defineProps<{ settings: Settings }>();

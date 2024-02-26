@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiChevronDown, mdiChevronUp, mdiCommentTextOutline } from "@mdi/js";
-import type { Post } from "~/interfaces/post";
+import type { Post } from "~/interfaces";
 
 const show = ref(true);
 const { data } = await useFetch("/api/activity");

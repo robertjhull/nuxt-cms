@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiMagnify, mdiPencil, mdiPlusThick } from "@mdi/js";
-import type { Post } from "~/interfaces/post";
+import type { Post } from "~/interfaces";
 
 const { data, pending, error } = await useFetch("/api/posts");
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiCheck, mdiChevronDown, mdiChevronUp, mdiTrashCan } from "@mdi/js";
-import type { Comment } from "~/interfaces/comment";
+import type { Comment } from "~/interfaces";
 
 const { data, pending, error } = await useFetch("/api/comments");
 

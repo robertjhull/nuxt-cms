@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { User } from "~/interfaces/user";
+import type { User } from "~/interfaces";
 
 // testing
 const { data } = await useFetch("/api/users", {

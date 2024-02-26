@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from "~/interfaces/post";
+import type { Post } from "~/interfaces";
 
 const { data: posts } = await useFetch("/api/posts");
 

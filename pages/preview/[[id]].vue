@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import type { Post } from "~/interfaces/post";
-import type { Settings } from "~/interfaces/settings";
+import type { Post, Settings } from "~/interfaces";
 
 const route = useRoute();
 const id = route.params.id;
