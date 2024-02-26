@@ -1,35 +1,54 @@
 <script setup lang="ts">
+import {
+  mdiArrowULeftTop,
+  mdiArrowURightTop,
+  mdiCodeBlockTags,
+  mdiCodeTags,
+  mdiFormatBold,
+  mdiFormatClear,
+  mdiFormatColorHighlight,
+  mdiFormatHeader1,
+  mdiFormatHeader2,
+  mdiFormatHeader3,
+  mdiFormatItalic,
+  mdiFormatListBulleted,
+  mdiFormatListNumbered,
+  mdiFormatParagraph,
+  mdiFormatQuoteOpen,
+  mdiFormatStrikethroughVariant,
+  mdiFormatTextWrappingWrap,
+} from "@mdi/js";
 import ExtendedEditor from "~/utils/tiptapEditor";
 
 const props = defineProps<{ editor: ExtendedEditor }>();
 
 const items = [
   {
-    icon: "$bold",
+    icon: mdiFormatBold,
     title: "Bold",
     action: () => props.editor.chain().focus().toggleBold().run(),
     isActive: () => props.editor.isActive("bold"),
   },
   {
-    icon: "$italic",
+    icon: mdiFormatItalic,
     title: "Italic",
     action: () => props.editor.chain().focus().toggleItalic().run(),
     isActive: () => props.editor.isActive("italic"),
   },
   {
-    icon: "$strikethrough",
+    icon: mdiFormatStrikethroughVariant,
     title: "Strike",
     action: () => props.editor.chain().focus().toggleStrike().run(),
     isActive: () => props.editor.isActive("strike"),
   },
   {
-    icon: "$code",
+    icon: mdiCodeTags,
     title: "Code",
     action: () => props.editor.chain().focus().toggleCode().run(),
     isActive: () => props.editor.isActive("code"),
   },
   {
-    icon: "$highlight",
+    icon: mdiFormatColorHighlight,
     title: "Highlight",
     action: () => props.editor.chain().focus().toggleHighlight().run(),
     isActive: () => props.editor.isActive("highlight"),
@@ -38,28 +57,28 @@ const items = [
     type: "divider",
   },
   {
-    icon: "$header1",
+    icon: mdiFormatHeader1,
     title: "Heading 1",
     action: () =>
       props.editor.chain().focus().toggleHeading({ level: 1 }).run(),
     isActive: () => props.editor.isActive("heading", { level: 1 }),
   },
   {
-    icon: "$header2",
+    icon: mdiFormatHeader2,
     title: "Heading 2",
     action: () =>
       props.editor.chain().focus().toggleHeading({ level: 2 }).run(),
     isActive: () => props.editor.isActive("heading", { level: 2 }),
   },
   {
-    icon: "$header3",
+    icon: mdiFormatHeader3,
     title: "Heading 3",
     action: () =>
       props.editor.chain().focus().toggleHeading({ level: 3 }).run(),
     isActive: () => props.editor.isActive("heading", { level: 3 }),
   },
   {
-    icon: "$paragraph",
+    icon: mdiFormatParagraph,
     title: "Paragraph",
     action: () => props.editor.chain().focus().setParagraph().run(),
     isActive: () => props.editor.isActive("paragraph"),
@@ -68,19 +87,19 @@ const items = [
     type: "divider",
   },
   {
-    icon: "$bulletList",
+    icon: mdiFormatListBulleted,
     title: "Bullet List",
     action: () => props.editor.chain().focus().toggleBulletList().run(),
     isActive: () => props.editor.isActive("bulletList"),
   },
   {
-    icon: "$orderList",
+    icon: mdiFormatListNumbered,
     title: "Ordered List",
     action: () => props.editor.chain().focus().toggleOrderedList().run(),
     isActive: () => props.editor.isActive("orderedList"),
   },
   {
-    icon: "$codeBlock",
+    icon: mdiCodeBlockTags,
     title: "Code Block",
     action: () => props.editor.chain().focus().toggleCodeBlock().run(),
     isActive: () => props.editor.isActive("codeBlock"),
@@ -89,32 +108,32 @@ const items = [
     type: "divider",
   },
   {
-    icon: "$quote",
+    icon: mdiFormatQuoteOpen,
     title: "Blockquote",
     action: () => props.editor.chain().focus().toggleBlockquote().run(),
     isActive: () => props.editor.isActive("blockquote"),
   },
   {
-    icon: "$textWrap",
+    icon: mdiFormatTextWrappingWrap,
     title: "Hard Break",
     action: () => props.editor.chain().focus().setHardBreak().run(),
     isActive: () => false,
   },
   {
-    icon: "$formatClear",
+    icon: mdiFormatClear,
     title: "Clear Format",
     action: () =>
       props.editor.chain().focus().clearNodes().unsetAllMarks().run(),
     isActive: () => false,
   },
   {
-    icon: "$undo",
+    icon: mdiArrowULeftTop,
     title: "Undo",
     action: () => props.editor.chain().focus().undo().run(),
     isActive: () => false,
   },
   {
-    icon: "$redo",
+    icon: mdiArrowURightTop,
     title: "Redo",
     action: () => props.editor.chain().focus().redo().run(),
     isActive: () => false,

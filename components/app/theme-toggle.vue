@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiThemeLightDark } from "@mdi/js";
 import { useTheme } from "vuetify";
 
 const theme = useTheme();
@@ -16,7 +17,7 @@ const toggleTheme = () => {
     variant="elevated"
     size="large">
     <template #default>
-      <v-icon icon="$theme" />
+      <v-icon :icon="mdiThemeLightDark" />
     </template>
   </v-chip>
 </template>
