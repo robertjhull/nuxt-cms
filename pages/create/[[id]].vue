@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Draft, Post } from "~/interfaces/post";
+import type { Post } from "~/interfaces/post";
 import ExtendedEditor from "~/utils/tiptapEditor";
 
-const draft = ref<Draft | Post>({ content: "<p>Start typing here...</p>" });
+const draft = ref<Partial<Post>>({ content: "<p>Start typing here...</p>" });
 const route = useRoute();
 
 const loadDraft = async () => {

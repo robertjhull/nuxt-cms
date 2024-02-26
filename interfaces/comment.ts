@@ -6,5 +6,6 @@ export interface Comment {
   text: string;
   created: string;
   replies: Comment[];
+  post: Post;
   status: "pending" | "approved" | "trash";
 }
