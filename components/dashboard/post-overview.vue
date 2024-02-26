@@ -60,14 +60,8 @@ const format = (datetime: string): string => formatLongDate(datetime);
 </template>
 
 <style lang="scss">
-.recent-post {
-  &:hover {
-    color: rgba(var(--v-theme-primary));
-    cursor: pointer;
-    background-image: linear-gradient(
-      rgba(var(--v-theme-primary), 0.1),
-      rgba(var(--v-theme-primary), 0.1)
-    );
-  }
+.recent-post:hover {
+  color: rgba(var(--v-theme-primary));
+  cursor: pointer;
 }
 </style>
