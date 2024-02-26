@@ -13,8 +13,9 @@ const user = data.value as User;
   <v-row class="d-flex justify-center mt-6">
     <v-col
       class="d-flex flex-column main-content"
-      cols="12"
-      sm="12"
+      cols="10"
+      xs="10"
+      sm="10"
       md="10"
       lg="8"
       xl="8">
@@ -23,7 +24,7 @@ const user = data.value as User;
           <project-summary />
           <comment-overview :user="user" />
         </v-col>
-        <v-col class="d-flex flex-column ga-10">
+        <v-col class="d-flex flex-column ga-10 mb-10">
           <post-overview :user="user" />
           <new-draft />
         </v-col>

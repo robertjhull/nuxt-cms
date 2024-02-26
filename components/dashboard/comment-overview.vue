@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import type { Comment } from "~/interfaces/comment";
 
 const show = ref(true);
@@ -28,7 +29,7 @@ const format = (datetime: string): string => formatShortDate(datetime);
     <template #append>
       <v-card-actions>
         <v-btn
-          :icon="show ? '$chevronUp' : '$chevronDown'"
+          :icon="show ? mdiChevronUp : mdiChevronDown"
           @click="show = !show"></v-btn>
       </v-card-actions>
     </template>
@@ -85,7 +86,7 @@ const format = (datetime: string): string => formatShortDate(datetime);
   </v-card>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .comment {
   border-left: 2px solid;
   &:hover {

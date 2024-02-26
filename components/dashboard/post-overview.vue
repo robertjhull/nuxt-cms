@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiCommentTextOutline } from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp, mdiCommentTextOutline } from "@mdi/js";
 import type { Post } from "~/interfaces/post";
 
 const show = ref(true);
@@ -20,7 +20,7 @@ const format = (datetime: string): string => formatLongDate(datetime);
     <template #append>
       <v-card-actions>
         <v-btn
-          :icon="show ? '$chevronUp' : '$chevronDown'"
+          :icon="show ? mdiChevronUp : mdiChevronDown"
           @click="show = !show"></v-btn>
       </v-card-actions>
     </template>
@@ -59,7 +59,7 @@ const format = (datetime: string): string => formatLongDate(datetime);
   </v-card>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .recent-post:hover {
   color: rgba(var(--v-theme-primary));
   cursor: pointer;

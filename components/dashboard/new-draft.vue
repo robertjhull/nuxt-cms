@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
+
 import { mdiNote } from "@mdi/js";
 
 const router = useRouter();
@@ -26,7 +28,7 @@ const saveDraft = async () => {
     <template #append>
       <v-card-actions>
         <v-btn
-          :icon="show ? '$chevronUp' : '$chevronDown'"
+          :icon="show ? mdiChevronUp : mdiChevronDown"
           @click="show = !show"></v-btn>
       </v-card-actions>
     </template>
