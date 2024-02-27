@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { User } from "~/interfaces";
 
+const { defaultUserId } = useRuntimeConfig();
+
 const { data } = await useFetch("/api/users", {
   method: "POST",
-  body: { id: "e95155db-412e-4e48-a8a4-302b73ec4beb" },
+  body: { id: defaultUserId },
 });
+
 const user = data.value as User;
 </script>
 

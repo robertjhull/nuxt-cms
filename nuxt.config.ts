@@ -6,12 +6,7 @@ export default defineNuxtConfig({
     // list all env variables and expose to application
     // NUXT_<key>
 
-    // The private keys which are only available server-side
-    apiSecret: "123",
-    // Keys within public are also exposed client-side
-    public: {
-      apiBase: "/api",
-    },
+    defaultUserId: "",
   },
   features: {
     inlineStyles: true, // or a function to determine inlining

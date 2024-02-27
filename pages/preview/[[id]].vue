@@ -2,26 +2,23 @@
 import { useRoute } from "vue-router";
 import type { Post, Settings } from "~/interfaces";
 
+const { defaultUserId } = useRuntimeConfig();
 const route = useRoute();
-const id = route.params.id;
+
 const appearanceSettings = ref<Settings>({} as Settings);
 const publishedPosts = ref<Post[]>([]);
 
 const { data: settings } = await useFetch("/api/settings/", {
   method: "get",
-  params: { id: "e95155db-412e-4e48-a8a4-302b73ec4beb" },
+  params: { id: defaultUserId },
 });
 
 if (settings.value) {
   appearanceSettings.value = settings.value as Settings;
 }
 
-const {
-  data: posts,
-  pending,
-  error,
-} = useFetch("/api/posts", {
-  params: { id: id ? id : null },
+const { data: posts } = useFetch("/api/posts", {
+  params: { id: route.params.id ? route.params.id : null },
 });
 
 if (posts.value) {
