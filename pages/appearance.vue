@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const { defaultUserId } = useRuntimeConfig();
-
 const settings = ref({
   pageTitle: "",
   pageColor: "#EEEEEE",
@@ -24,20 +22,15 @@ const fontOptions = [
 const saveAppearanceSettings = async () => {
   await $fetch("/api/settings", {
     method: "patch",
-    body: { id: defaultUserId, ...settings.value },
+    body: { ...settings.value },
   });
 };
 
-const { data } = await useFetch("/api/settings/", {
-  method: "get",
-  params: { id: defaultUserId },
-});
+const { data } = await useFetch("/api/settings/");
 
-onMounted(() => {
-  if (data.value) {
-    Object.assign(settings.value, data.value);
-  }
-});
+if (data.value) {
+  Object.assign(settings.value, data.value);
+}
 </script>
 
 <template>
