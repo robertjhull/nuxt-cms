@@ -40,7 +40,7 @@ const format = (datetime: string): string => formatLongDate(datetime);
                 cols="2"
                 class="d-flex justify-end">
                 <v-list-item-action>
-                  {{ post.comments }}
+                  {{ post.comments.length }}
                   <v-icon
                     :icon="mdiCommentTextOutline"
                     class="mx-1" />

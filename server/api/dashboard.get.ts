@@ -1,21 +1,18 @@
 import { User } from "~/interfaces";
 
 export default defineEventHandler(async (event) => {
-  const { userId } = getQuery(event);
+  const config = useRuntimeConfig();
 
-  const { functionsBaseUrl } = useRuntimeConfig();
-
-  const user: User = await $fetch(`${functionsBaseUrl}user/getDashboard`, {
-    method: "POST",
-    query: { userId: userId },
-  });
-
-  if (!user) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "Could not locate user.",
-    });
-  }
+  const user: User = await $fetch(
+    `${config.functionsBaseUrl}user/getDashboard`,
+    {
+      method: "GET",
+      query: { userId: config.defaultUserId },
+      headers: {
+        Authorization: `Bearer ${config.functionsAuthToken}`,
+      },
+    }
+  );
 
   console.log("payload: " + user);
   return user;

@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import type { User } from "~/interfaces";
 
-const { defaultUserId } = useRuntimeConfig();
+const user = ref<User>();
 
-const { data, pending } = await useFetch("/api/dashboard", {
-  method: "GET",
-  query: { userId: defaultUserId },
-});
+const { data } = await useFetch("/api/dashboard");
 
-const user = data.value as User;
+if (data.value) {
+  user.value = data.value as User;
+}
 </script>
 
 <template>
@@ -21,8 +20,8 @@ const user = data.value as User;
       md="10"
       lg="8"
       xl="8">
-      <v-row v-if="pending">Loading...</v-row>
-      <v-row v-else>
+      <v-row v-if="user">
+        {{ user.posts }}
         <v-col class="d-flex flex-column ga-10">
           <project-summary />
           <comment-overview v-model="user.comments" />
