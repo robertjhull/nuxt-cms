@@ -44,25 +44,17 @@ const headers = [
 const { formatShortDate } = useFormattedDate();
 const datePosted = (datetime: string): string => formatShortDate(datetime);
 
-const approveComment = async (comment: Comment) => {
+const updateComment = async (
+  comment: Comment,
+  status: "approved" | "pending" | "trash"
+) => {
   const success = await $fetch("/api/comments", {
     method: "patch",
-    body: { commentId: comment.id, status: "approved" },
+    body: { commentId: comment.id, status: status },
   });
 
   if (success) {
-    comment.status = "approved";
-  }
-};
-
-const deleteComment = async (comment: Comment) => {
-  const success = await $fetch("/api/comments", {
-    method: "patch",
-    body: { commentId: comment.id, status: "trash" },
-  });
-
-  if (success) {
-    comment.status = "trash";
+    comment.status = status;
   }
 };
 
@@ -138,13 +130,13 @@ onMounted(() => (selection.value = 0));
                     color="success"
                     variant="plain"
                     :icon="mdiCheck"
-                    @click="approveComment(item)" />
+                    @click="updateComment(item, 'approved')" />
                   <v-btn
                     v-if="item.status != 'trash'"
                     variant="plain"
                     color="error"
                     :icon="mdiTrashCan"
-                    @click="deleteComment(item)" />
+                    @click="updateComment(item, 'trash')" />
                   <v-btn
                     variant="plain"
                     :icon="
