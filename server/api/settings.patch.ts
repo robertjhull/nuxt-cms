@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     if (!updated) {
       return createError({
         statusCode: 404,
-        message: "Failed to update comment status",
+        message: "Failed to update settings",
       });
     }
 

@@ -3,14 +3,13 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
-    // list all env variables and expose to application
-    // NUXT_<key>
-
+    // not accessible to client
     defaultUserId: "",
     functionsBaseUrl: "",
+    functionsAuthToken: "",
   },
   features: {
-    inlineStyles: true, // or a function to determine inlining
+    inlineStyles: true,
   },
   future: {
     typescriptBundlerResolution: true,
