@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     // NUXT_<key>
 
     defaultUserId: "",
+    functionsBaseUrl: "",
   },
   features: {
     inlineStyles: true, // or a function to determine inlining

@@ -3,9 +3,9 @@ import type { User } from "~/interfaces";
 
 const { defaultUserId } = useRuntimeConfig();
 
-const { data } = await useFetch("/api/users", {
-  method: "POST",
-  body: { id: defaultUserId },
+const { data, pending } = await useFetch("/api/dashboard", {
+  method: "GET",
+  query: { userId: defaultUserId },
 });
 
 const user = data.value as User;
@@ -21,7 +21,8 @@ const user = data.value as User;
       md="10"
       lg="8"
       xl="8">
-      <v-row>
+      <v-row v-if="pending">Loading...</v-row>
+      <v-row v-else>
         <v-col class="d-flex flex-column ga-10">
           <project-summary />
           <comment-overview v-model="user.comments" />
