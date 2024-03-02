@@ -8,6 +8,7 @@ import { Editor } from "@tiptap/vue-3";
 import type { Post } from "~/interfaces";
 
 export default class ExtendedEditor extends Editor {
+  id?: string | undefined;
   title?: string | null;
   subtitle?: string | null;
   loading: boolean = false;
@@ -26,6 +27,7 @@ export default class ExtendedEditor extends Editor {
       ],
     });
 
+    this.id = post.id;
     this.title = post.title;
     this.subtitle = post.subtitle;
   }
@@ -45,14 +47,18 @@ export default class ExtendedEditor extends Editor {
     if (!this.valid()) return false;
 
     const newDraft = {
+      //id: temp ID,
       title: this.title,
       subtitle: this.subtitle,
       content: this.getHTML(),
-    };
+    } as Post;
 
     // save to store
     return true;
   }
 
-  preview() {}
+  preview() {
+    this.saveDraft();
+    // navigate to preview page with temp ID
+  }
 }

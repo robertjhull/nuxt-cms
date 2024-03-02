@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const updated: boolean = await $fetch(
-      `${config.functionsBaseUrl}settings/update`,
+      `${config.functionsBaseUrl}user/updateSettings`,
       {
         method: "PATCH",
         body: {
