@@ -8,21 +8,22 @@ const route = useRoute();
 const appearanceSettings = ref<Settings>({} as Settings);
 const publishedPosts = ref<Post[]>([]);
 
-const { data: settings } = await useFetch("/api/settings/", {
-  method: "get",
-  params: { id: defaultUserId },
-});
+const { data: settings } = await useFetch("/api/settings/");
 
 if (settings.value) {
   appearanceSettings.value = settings.value as Settings;
 }
 
-const { data: posts } = useFetch("/api/posts", {
-  params: { id: route.params.id ? route.params.id : null },
-});
+if (route.params.id) {
+  // search store for ID and load post (if exists) into publishedPosts
+} else {
+  const { data: posts } = useFetch("/api/posts", {
+    params: { postId: route.params.id ? route.params.id : null },
+  });
 
-if (posts.value) {
-  publishedPosts.value = posts.value as Post[];
+  if (posts.value) {
+    publishedPosts.value = posts.value as Post[];
+  }
 }
 </script>
 

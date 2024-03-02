@@ -10,7 +10,7 @@ const loadDraft = async () => {
     return null;
   }
 
-  const { data } = await useFetch("/api/posts", {
+  const { data } = await useFetch("/api/post", {
     method: "get",
     query: { id: route.params.id },
   });

@@ -57,7 +57,8 @@ const format = (datetime: string): string => formatShortDate(datetime);
                       overflow: hidden;
                       text-overflow: ellipsis;
                     ">
-                    {{ comment.author }} on <em>{{ comment.post.title }}</em>
+                    {{ comment.author.name }} on
+                    <em>{{ comment.post.title }}</em>
                   </div>
                   <div class="text-caption">
                     {{ format(comment.created as string) }}
