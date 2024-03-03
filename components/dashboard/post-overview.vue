@@ -27,7 +27,7 @@ const format = (datetime: string): string => formatLongDate(datetime);
         <v-list class="pa-2">
           <template
             v-for="(post, index) in recentlyPublished"
-            :key="post.id">
+            :key="post._id">
             <v-divider v-if="index != 0" />
             <div class="d-flex justify-space-between recent-post align-center">
               <v-col cols="8">

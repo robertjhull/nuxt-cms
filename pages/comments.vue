@@ -50,7 +50,7 @@ const updateComment = async (
 ) => {
   const success = await $fetch("/api/comments", {
     method: "patch",
-    body: { commentId: comment.id, status: status },
+    body: { commentId: comment._id, status: status },
   });
 
   if (success) {

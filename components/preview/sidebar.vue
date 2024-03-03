@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Post } from "~/interfaces";
 
-const { data: posts } = await useFetch("/api/posts");
+const { data: posts } = await useFetch("/api/post");
 
 interface SidebarLink {
   type?: "subheader";
-  id?: number;
+  id?: string | undefined;
   title: string;
 }
 
@@ -27,7 +27,7 @@ function sidebarLinks(): SidebarLink[] {
       links.push({ type: "subheader", title: createdDate });
       prevDate = createdDate;
     }
-    links.push(post);
+    links.push({ id: post._id, title: post.title });
   });
 
   return links;

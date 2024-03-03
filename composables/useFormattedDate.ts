@@ -1,7 +1,7 @@
 export default function () {
   const parse = (datetime: string) => {
-    const date = new Date(datetime);
-    if (isNaN(date.getTime())) throw new Error();
+    let date = new Date(datetime);
+    if (isNaN(date.getTime())) date = new Date();
     return date;
   };
 

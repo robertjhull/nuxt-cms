@@ -112,7 +112,7 @@ onMounted(() => (selection.value = 0));
                   }}</em>
                 </td>
                 <td width="10">
-                  <nuxt-link :to="'/create/' + item.id">
+                  <nuxt-link :to="'/create/' + item._id">
                     <v-btn
                       variant="flat"
                       :icon="mdiPencil" />

@@ -12,7 +12,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
   <v-sheet
     class="pa-6 mb-16"
     color="transparent"
-    :key="post.id">
+    :key="post._id">
     <!-- Meta -->
     <header
       class="post-header"
@@ -36,14 +36,14 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
 
     <!-- Content -->
     <div>
-      <v-html
+      <div
         class="post-content"
         :style="{
           color: settings.textColor,
           fontSize: settings.fontSize,
           fontFamily: settings.fontFamily.value,
         }"
-        v-html="post.content" />
+        v-html="post.content"></div>
     </div>
 
     <v-divider class="my-10" />
@@ -58,7 +58,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
         class="bg-transparent">
         <template
           v-for="(comment, index) in post.comments"
-          :key="comment.id">
+          :key="comment._id">
           <preview-comment v-model="post.comments[index]" />
         </template>
       </v-list>

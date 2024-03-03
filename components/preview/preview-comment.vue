@@ -20,7 +20,7 @@ const format = (datetime: string): string => formatShortDate(datetime);
         no-gutters>
         <v-col cols="10">
           <div class="font-weight-thin">
-            {{ comment.author }}
+            {{ comment.author.name }}
           </div>
           <div class="text-caption">
             {{ format(comment.created as string) }}
@@ -29,7 +29,7 @@ const format = (datetime: string): string => formatShortDate(datetime);
       </v-row>
     </div>
     <v-row
-      v-if="comment.replies.length"
+      v-if="comment.replies && comment.replies.length"
       no-gutters
       class="d-flex justify-end">
       <v-col

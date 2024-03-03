@@ -35,7 +35,7 @@ const format = (datetime: string): string => formatShortDate(datetime);
         <v-list>
           <template
             v-for="(comment, index) in recentComments"
-            :key="comment.id">
+            :key="comment._id">
             <v-divider v-if="index != 0" />
             <v-sheet class="ma-4 mb-8 pl-2 comment">
               <v-row

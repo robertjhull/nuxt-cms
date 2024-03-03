@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   posts: Post[];
   comments: Comment[];
@@ -16,7 +16,7 @@ export interface Settings {
 }
 
 export interface Post {
-  id: string;
+  _id: string;
   title: string;
   subtitle: string;
   author: User;
@@ -28,7 +28,7 @@ export interface Post {
 }
 
 export interface Comment {
-  id: string;
+  _id: string;
   author: User;
   text: string;
   created: string;
