@@ -4,19 +4,25 @@ import ExtendedEditor from "~/utils/tiptapEditor";
 
 const post = ref<Partial<Post>>({ content: "<p>Start typing here...</p>" });
 const route = useRoute();
+const store = usePostsStore();
 
 const loadDraft = async () => {
   if (!route || !route.params.id) {
     return null;
   }
 
-  const { data } = await useFetch("/api/post", {
-    method: "get",
-    query: { id: route.params.id },
-  });
+  const draft = store.getPostById(route.params.id as string);
+  if (draft) {
+    post.value = draft;
+  } else {
+    const { data } = await useFetch("/api/post", {
+      method: "get",
+      query: { id: route.params.id },
+    });
 
-  if (data.value) {
-    post.value = (data.value as Post[])[0];
+    if (data.value) {
+      post.value = (data.value as Post[])[0];
+    }
   }
 };
 
@@ -24,7 +30,7 @@ await loadDraft();
 
 let editor: ExtendedEditor | null = null;
 onMounted(() => {
-  editor = new ExtendedEditor(post.value);
+  editor = new ExtendedEditor(post.value, store);
 });
 </script>
 

@@ -79,10 +79,13 @@ const theme = useTheme();
 .editor {
   min-height: 90vh;
 }
+</style>
 
+<style lang="scss">
 .tiptap {
-  &:focus-visible {
-    outline: none;
+  &:focus-visible,
+  &:focus {
+    outline: none !important;
   }
 
   > * + * {

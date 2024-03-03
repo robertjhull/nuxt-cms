@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { mdiChevronDown, mdiChevronUp, mdiNote } from "@mdi/js";
+import type { Post } from "~/interfaces";
 
 const router = useRouter();
+const store = usePostsStore();
 const show = ref(true);
-const title = ref("");
-const content = ref("");
+const title = ref<string>();
+const content = ref();
 
 const saveDraft = async () => {
-  // save in local store
-  router.push("/posts");
+  const draft = {
+    _id: store.getDraftId(),
+    title: title.value,
+    subtitle: "",
+    content: content.value,
+  } as Post;
+  const id = store.addPost(draft);
+  router.push(`/create/${id}`);
 };
 </script>
 

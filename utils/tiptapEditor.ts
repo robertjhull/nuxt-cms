@@ -6,7 +6,6 @@ import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import { Editor } from "@tiptap/vue-3";
 import type { Post } from "~/interfaces";
-import { usePostsStore } from "~/stores/posts";
 
 export default class ExtendedEditor extends Editor {
   id?: string | undefined;
@@ -14,8 +13,12 @@ export default class ExtendedEditor extends Editor {
   subtitle?: string | null;
   loading: boolean = false;
   error: string[] = [];
+  store: ReturnType<typeof usePostsStore>;
 
-  constructor(post: Post | Partial<Post>) {
+  constructor(
+    post: Post | Partial<Post>,
+    piniaStore: ReturnType<typeof usePostsStore>
+  ) {
     super({
       content: post.content,
       extensions: [
@@ -31,6 +34,8 @@ export default class ExtendedEditor extends Editor {
     this.id = post._id;
     this.title = post.title;
     this.subtitle = post.subtitle;
+
+    this.store = piniaStore;
   }
 
   valid(): boolean {
@@ -48,14 +53,13 @@ export default class ExtendedEditor extends Editor {
     if (!this.valid()) return false;
 
     const newDraft = {
-      _id: this.id ? this.id : "temp-post-id",
+      _id: this.store.getDraftId(),
       title: this.title,
       subtitle: this.subtitle,
       content: this.getHTML(),
     } as Post;
 
-    const postsStore = usePostsStore();
-    postsStore.addPost(newDraft);
+    this.store.addPost(newDraft);
 
     this.loading = false;
     return newDraft._id;

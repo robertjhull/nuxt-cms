@@ -7,16 +7,20 @@ export const usePostsStore = defineStore("posts", {
     posts: [] as Post[],
   }),
   actions: {
-    addPost(post: Post) {
+    addPost(post: Post): string {
       const existingIndex = this.posts.findIndex((p) => p._id === post._id);
       if (existingIndex !== -1) {
         this.posts[existingIndex] = post;
       } else {
         this.posts.push(post);
       }
+      return post._id;
     },
     getPostById(id: string) {
       return this.posts.find((post) => post._id === id);
+    },
+    getDraftId() {
+      return "draft-" + this.posts.length;
     },
   },
 });
