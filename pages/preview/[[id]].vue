@@ -6,50 +6,56 @@ import { usePostsStore } from "~/stores/posts";
 const route = useRoute();
 const postsStore = usePostsStore();
 
-const appearanceSettings = ref<Settings>({} as Settings);
-const publishedPosts = ref<Post[]>([]);
+const postId = computed(() => route.params.id as string | undefined);
 
-const { data: settings } = await useFetch("/api/settings/");
+const { data: settings } = await useAsyncData<Settings>("settings", () =>
+  $fetch("/api/settings/")
+);
 
-if (settings.value) {
-  appearanceSettings.value = settings.value as Settings;
-}
+let initialPost = postId.value
+  ? postsStore.getPostById(postId.value as string)
+  : null;
+const publishedPosts = ref<Post[]>(initialPost ? [initialPost] : []);
 
-if (route.params.id) {
-  const storePost = postsStore.getPostById(route.params.id as string);
-
-  if (storePost) {
-    publishedPosts.value = [storePost];
-  } else {
-    const { data: posts } = useFetch("/api/post", {
-      params: { postId: route.params.id },
-    });
-
-    if (posts.value) {
-      publishedPosts.value = posts.value as Post[];
+watch(
+  postId,
+  async (newId, oldId) => {
+    console.log("inside watcher, ", newId);
+    if (!newId) {
+      const posts = await $fetch<Post[]>("/api/post");
+      publishedPosts.value = posts || [];
+    } else {
+      let storePost = postsStore.getPostById(newId as string);
+      if (storePost) {
+        publishedPosts.value = [storePost];
+      } else {
+        try {
+          const fetchedPost = await $fetch<Post[]>(`/api/post?postId=${newId}`);
+          publishedPosts.value = fetchedPost;
+        } catch (error) {
+          console.error("Failed to fetch post:", error);
+          publishedPosts.value = [];
+        }
+      }
     }
-  }
-} else {
-  const { data: posts } = useFetch("/api/post");
-
-  if (posts.value) {
-    publishedPosts.value = posts.value as Post[];
-  }
-}
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
   <v-container
+    v-if="settings"
     fluid
     class="pa-0"
-    :style="{ backgroundColor: appearanceSettings.pageColor }">
+    :style="{ backgroundColor: settings.pageColor }">
     <return-to-dashboard />
 
     <!-- Header Image -->
     <v-row no-gutters>
       <v-img
         class="header-image"
-        :src="appearanceSettings.headerImage"
+        :src="settings.headerImage"
         gradient="to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)"
         width="100%"
         height="15dvw"
@@ -59,7 +65,7 @@ if (route.params.id) {
             <h1
               class="page-title"
               style="color: white">
-              {{ appearanceSettings.pageTitle }}
+              {{ settings.pageTitle }}
             </h1>
           </v-col>
         </v-row>
@@ -76,11 +82,12 @@ if (route.params.id) {
         sm="12">
         <!-- Blog post content here -->
         <template
+          v-if="publishedPosts"
           v-for="(post, index) in publishedPosts"
           :key="post._id">
           <preview-post
             v-model="publishedPosts[index]"
-            :settings="appearanceSettings" />
+            :settings="settings"></preview-post>
         </template>
       </v-col>
       <v-col cols="2">

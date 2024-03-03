@@ -50,10 +50,12 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
     <!-- Comments Section -->
     <v-sheet class="bg-transparent">
       <h2 class="px-4 text-white">
-        Comments ({{ post.comments.length ?? "0" }})
+        Comments ({{
+          post.comments && post.comments.length ? post.comments.length : "0"
+        }})
       </h2>
       <v-list
-        v-if="post.comments.length"
+        v-if="post.comments && post.comments.length"
         class="bg-transparent">
         <template
           v-for="(comment, index) in post.comments"
