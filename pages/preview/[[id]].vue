@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import type { Post, Settings } from "~/interfaces";
+import { usePostsStore } from "~/stores/posts";
 
-const { defaultUserId } = useRuntimeConfig();
 const route = useRoute();
+const postsStore = usePostsStore();
 
 const appearanceSettings = ref<Settings>({} as Settings);
 const publishedPosts = ref<Post[]>([]);
@@ -15,11 +16,21 @@ if (settings.value) {
 }
 
 if (route.params.id) {
-  // search store for ID and load post (if exists) into publishedPosts
+  const storePost = postsStore.getPostById(route.params.id as string);
+
+  if (storePost) {
+    publishedPosts.value = [storePost];
+  } else {
+    const { data: posts } = useFetch("/api/post", {
+      params: { postId: route.params.id },
+    });
+
+    if (posts.value) {
+      publishedPosts.value = posts.value as Post[];
+    }
+  }
 } else {
-  const { data: posts } = useFetch("/api/posts", {
-    params: { postId: route.params.id ? route.params.id : null },
-  });
+  const { data: posts } = useFetch("/api/post");
 
   if (posts.value) {
     publishedPosts.value = posts.value as Post[];
@@ -66,7 +77,7 @@ if (route.params.id) {
         <!-- Blog post content here -->
         <template
           v-for="(post, index) in publishedPosts"
-          :key="post.id">
+          :key="post._id">
           <preview-post
             v-model="publishedPosts[index]"
             :settings="appearanceSettings" />

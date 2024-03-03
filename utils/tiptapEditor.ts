@@ -6,6 +6,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import { Editor } from "@tiptap/vue-3";
 import type { Post } from "~/interfaces";
+import { usePostsStore } from "~/stores/posts";
 
 export default class ExtendedEditor extends Editor {
   id?: string | undefined;
@@ -27,7 +28,7 @@ export default class ExtendedEditor extends Editor {
       ],
     });
 
-    this.id = post.id;
+    this.id = post._id;
     this.title = post.title;
     this.subtitle = post.subtitle;
   }
@@ -40,25 +41,29 @@ export default class ExtendedEditor extends Editor {
     return this.error.length == 0;
   }
 
-  async saveDraft(): Promise<boolean> {
+  async saveDraft(): Promise<string | boolean> {
     this.loading = true;
     this.error = [];
 
     if (!this.valid()) return false;
 
     const newDraft = {
-      //id: temp ID,
+      _id: this.id ? this.id : "temp-post-id",
       title: this.title,
       subtitle: this.subtitle,
       content: this.getHTML(),
     } as Post;
 
-    // save to store
-    return true;
+    const postsStore = usePostsStore();
+    postsStore.addPost(newDraft);
+
+    this.loading = false;
+    return newDraft._id;
   }
 
-  preview() {
-    this.saveDraft();
-    // navigate to preview page with temp ID
+  async preview(): Promise<void> {
+    const draftId = await this.saveDraft();
+    const router = useRouter();
+    router.push(`/preview/${draftId}`);
   }
 }
