@@ -9,13 +9,16 @@ const fontOptions = [
 ];
 
 export default function () {
+  const saving = ref(false);
+  const success = ref(false);
   const {
     data: appearanceSettings,
     pending,
     error,
-  } = useAsyncData<Settings>("appearance-settings", () =>
-    $fetch("/api/settings")
-  );
+  } = useAsyncData<Settings>("appearance-settings", () => {
+    const cacheBuster = new Date().getTime();
+    return $fetch(`/api/settings/?t=${cacheBuster}`);
+  });
 
   const defaultSettings = reactive<Settings>({
     pageTitle: "",
@@ -31,11 +34,28 @@ export default function () {
   });
 
   const saveAppearanceSettings = async () => {
-    await $fetch("/api/settings", {
-      method: "PATCH",
-      body: settings.value,
-    });
+    saving.value = true;
+    try {
+      await $fetch("/api/settings", {
+        method: "PATCH",
+        body: settings.value,
+      });
+      success.value = true;
+    } catch (err) {
+      console.log(err);
+      success.value = false;
+    } finally {
+      saving.value = false;
+    }
   };
 
-  return { settings, fontOptions, saveAppearanceSettings, pending, error };
+  return {
+    settings,
+    fontOptions,
+    saveAppearanceSettings,
+    pending,
+    saving,
+    success,
+    error,
+  };
 }

@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import { mdiCheckCircle } from "@mdi/js";
 import { ref } from "vue";
 import useAppearanceSettings from "~/composables/useAppearanceSettings";
 
-const { settings, fontOptions, saveAppearanceSettings, pending, error } =
-  useAppearanceSettings();
+const {
+  settings,
+  fontOptions,
+  saveAppearanceSettings,
+  pending,
+  saving,
+  success,
+  error,
+} = useAppearanceSettings();
 const color = ref("#FFA000");
 </script>
 
@@ -106,14 +114,26 @@ const color = ref("#FFA000");
           </v-row>
           <v-row
             no-gutters
-            class="w-100 pa-2">
+            class="w-100 pa-2 align-center">
             <v-btn
               color="success"
               variant="flat"
               class="my-12"
               @click="saveAppearanceSettings">
+              <template #prepend>
+                <v-progress-circular
+                  v-if="saving"
+                  size="20"
+                  indeterminate />
+              </template>
               Save Appearance
             </v-btn>
+            <v-fade-transition>
+              <v-icon
+                v-if="success && !saving"
+                class="mx-2 text-success"
+                :icon="mdiCheckCircle" />
+            </v-fade-transition>
           </v-row>
         </v-col>
         <v-spacer />
