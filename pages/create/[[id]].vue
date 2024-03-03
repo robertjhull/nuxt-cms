@@ -6,31 +6,34 @@ const post = ref<Partial<Post>>({ content: "<p>Start typing here...</p>" });
 const route = useRoute();
 const store = usePostsStore();
 
+let editor: ExtendedEditor | null = null;
+
 const loadDraft = async () => {
-  if (!route || !route.params.id) {
-    return null;
+  const draftId = route.params.id as string | undefined;
+  if (!draftId) {
+    return;
   }
 
-  const draft = store.getPostById(route.params.id as string);
+  const draft = store.getPostById(draftId);
   if (draft) {
     post.value = draft;
-  } else {
-    const { data } = await useFetch("/api/post", {
-      method: "get",
-      query: { id: route.params.id },
-    });
+    return;
+  }
 
-    if (data.value) {
-      post.value = (data.value as Post[])[0];
+  try {
+    const fetchedPost = await $fetch<Post>(`/api/post?postId=${draftId}`);
+    if (fetchedPost) {
+      post.value = fetchedPost;
     }
+  } catch (error) {
+    console.error("Failed to load draft:", error);
   }
 };
 
-await loadDraft();
-
-let editor: ExtendedEditor | null = null;
 onMounted(() => {
-  editor = new ExtendedEditor(post.value, store);
+  loadDraft().then(() => {
+    editor = new ExtendedEditor(post.value, store);
+  });
 });
 </script>
 
