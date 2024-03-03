@@ -30,6 +30,7 @@ export interface Post {
 export interface Comment {
   _id: string;
   authorName: string;
+  postTitle: string;
   text: string;
   created: string;
   replies: Comment[];

@@ -13,7 +13,6 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
     class="pa-6 mb-16"
     color="transparent"
     :key="post._id">
-    <!-- Meta -->
     <header
       class="post-header"
       :style="{

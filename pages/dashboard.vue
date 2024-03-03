@@ -1,36 +1,43 @@
 <script setup lang="ts">
 import type { User } from "~/interfaces";
 
-const user = ref<User>();
-
-const { data } = await useFetch("/api/dashboard");
-
-if (data.value) {
-  user.value = data.value as User;
-}
+const {
+  data: user,
+  pending,
+  error,
+} = useAsyncData<User>("user-dashboard", () => {
+  return $fetch("/api/dashboard");
+});
 </script>
 
 <template>
-  <v-row class="d-flex justify-center mt-6">
-    <v-col
-      class="d-flex flex-column main-content"
-      cols="10"
-      xs="10"
-      sm="10"
-      md="10"
-      lg="8"
-      xl="8">
-      <v-row v-if="user">
-        {{ user.posts }}
-        <v-col class="d-flex flex-column ga-10">
-          <project-summary />
-          <comment-overview v-model="user.comments" />
-        </v-col>
-        <v-col class="d-flex flex-column ga-10 mb-10">
-          <post-overview v-model="user.posts" />
-          <new-draft />
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-row>
+  <v-container
+    class="pa-0 ma-0 fill-height"
+    fluid>
+    <div v-if="pending">Loading dashboard...</div>
+    <div v-else-if="error">An error occured: {{ error.message }}</div>
+    <v-row
+      v-else
+      class="d-flex justify-center mt-6">
+      <v-col
+        class="d-flex flex-column main-content"
+        cols="10"
+        xs="10"
+        sm="10"
+        md="10"
+        lg="8"
+        xl="8">
+        <v-row v-if="user">
+          <v-col class="d-flex flex-column ga-10">
+            <project-summary />
+            <comment-overview v-model="user.comments" />
+          </v-col>
+          <v-col class="d-flex flex-column ga-10 mb-10">
+            <post-overview v-model="user.posts" />
+            <new-draft />
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
