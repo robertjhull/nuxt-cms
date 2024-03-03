@@ -1,11 +1,13 @@
 const config = useRuntimeConfig();
 
 export default defineEventHandler(async (event) => {
-  const postId = getQuery(event);
+  const query = getQuery(event);
   try {
     const posts = await $fetch(`${config.functionsBaseUrl}post/getPreview`, {
       method: "GET",
-      query: { userId: config.defaultUserId, postId: postId },
+      query: query.postId
+        ? { userId: config.defaultUserId, postId: query.postId }
+        : { userId: config.defaultUserId },
       headers: {
         Authorization: `Bearer ${config.functionsAuthToken}`,
       },
