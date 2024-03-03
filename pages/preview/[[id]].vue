@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import type { Post, Settings } from "~/interfaces";
+import type { Post } from "~/interfaces";
 import { usePostsStore } from "~/stores/posts";
 
 const route = useRoute();
@@ -8,9 +8,7 @@ const postsStore = usePostsStore();
 
 const postId = computed(() => route.params.id as string | undefined);
 
-const { data: settings } = await useAsyncData<Settings>("settings", () =>
-  $fetch("/api/settings/")
-);
+const { settings } = useAppearanceSettings();
 
 let initialPost = postId.value
   ? postsStore.getPostById(postId.value as string)
@@ -20,7 +18,6 @@ const publishedPosts = ref<Post[]>(initialPost ? [initialPost] : []);
 watch(
   postId,
   async (newId, oldId) => {
-    console.log("inside watcher, ", newId);
     if (!newId) {
       const posts = await $fetch<Post[]>("/api/post");
       publishedPosts.value = posts || [];
