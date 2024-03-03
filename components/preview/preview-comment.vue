@@ -20,7 +20,7 @@ const format = (datetime: string): string => formatShortDate(datetime);
         no-gutters>
         <v-col cols="10">
           <div class="font-weight-thin">
-            {{ comment.author.name }}
+            {{ comment.authorName }}
           </div>
           <div class="text-caption">
             {{ format(comment.created as string) }}

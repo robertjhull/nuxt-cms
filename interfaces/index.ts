@@ -19,7 +19,7 @@ export interface Post {
   _id: string;
   title: string;
   subtitle: string;
-  author: User;
+  authorName: string;
   content: string;
   comments: Comment[];
   created: string;
@@ -29,7 +29,7 @@ export interface Post {
 
 export interface Comment {
   _id: string;
-  author: User;
+  authorName: string;
   text: string;
   created: string;
   replies: Comment[];

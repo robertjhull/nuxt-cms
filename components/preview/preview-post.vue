@@ -23,7 +23,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
       }">
       <div class="post-title">{{ post.title }}</div>
       <div class="post-meta">
-        <span class="author">By {{ post.author.name }}</span>
+        <span class="author">By {{ post.authorName }}</span>
         <time
           class="timestamp"
           :datetime="post.created"
