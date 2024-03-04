@@ -19,7 +19,13 @@ const color = ref("#FFA000");
   <v-container
     fluid
     class="pa-0 fill-height">
-    <div v-if="pending">Loading settings...</div>
+    <div
+      v-if="pending"
+      class="linear-progress-bar">
+      <v-progress-linear
+        color="primary"
+        indeterminate />
+    </div>
     <div v-else-if="error">An error occurred: {{ error.message }}</div>
     <v-card
       v-else

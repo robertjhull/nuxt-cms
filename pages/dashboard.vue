@@ -14,7 +14,13 @@ const {
   <v-container
     class="pa-0 ma-0 fill-height"
     fluid>
-    <div v-if="pending">Loading dashboard...</div>
+    <div
+      v-if="pending"
+      class="linear-progress-bar">
+      <v-progress-linear
+        color="primary"
+        indeterminate />
+    </div>
     <div v-else-if="error">An error occured: {{ error.message }}</div>
     <v-row
       v-else
