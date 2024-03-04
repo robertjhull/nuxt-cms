@@ -13,6 +13,7 @@ export default class ExtendedEditor extends Editor {
   subtitle: Ref<string>;
   loading: boolean = false;
   errors: string[] = [];
+  success: boolean = false;
   store: ReturnType<typeof usePostsStore>;
 
   constructor(piniaStore: ReturnType<typeof usePostsStore>, post?: Post) {
@@ -52,6 +53,7 @@ export default class ExtendedEditor extends Editor {
 
   async saveDraft(): Promise<string> {
     this.loading = true;
+    this.success = false;
     this.errors = [];
 
     const newDraft = {
@@ -59,12 +61,15 @@ export default class ExtendedEditor extends Editor {
       title: this.title.value,
       subtitle: this.subtitle.value,
       content: this.getHTML(),
+      authorName: "Demo User",
       status: "draft",
+      created: new Date().toDateString(),
     } as Post;
 
     this.store.addPost(newDraft);
 
     this.loading = false;
+    this.success = true;
     return newDraft._id;
   }
 

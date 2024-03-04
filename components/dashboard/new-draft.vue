@@ -1,15 +1,30 @@
 <script setup lang="ts">
 import { mdiChevronDown, mdiChevronUp, mdiNote } from "@mdi/js";
+import type { VForm } from "vuetify/components/VForm";
+import type { Post } from "~/interfaces";
 
 const router = useRouter();
 const store = usePostsStore();
 const show = ref(true);
-
+const formRef = ref();
 const title = ref<string>();
 const content = ref<string>();
 
 const saveDraft = async () => {
-  const id = store.addDraft(title.value!, content.value!);
+  const { valid } = await (formRef.value as VForm).validate();
+  if (!valid) {
+    return;
+  }
+
+  const draftPost = {
+    _id: store.getDraftId(),
+    title: title.value,
+    subtitle: "",
+    content: content.value,
+    authorName: "Demo User",
+  } as Post;
+
+  const id = store.addPost(draftPost);
   router.push(`/create/${id}`);
 };
 </script>
@@ -30,7 +45,8 @@ const saveDraft = async () => {
       <div v-show="show">
         <v-sheet class="pa-4">
           <v-form
-            @submit="saveDraft"
+            ref="formRef"
+            @submit.prevent="saveDraft"
             validate-on="submit">
             <v-text-field
               label="Title"

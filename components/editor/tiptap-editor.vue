@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiCheckCircle } from "@mdi/js";
 import { EditorContent } from "@tiptap/vue-3";
 import { useTheme } from "vuetify";
 import type ExtendedEditor from "~/utils/extendedEditor";
@@ -46,21 +47,33 @@ const theme = useTheme();
             'bg-background-darken-1': !theme.current.value.dark,
           }">
           <div class="d-flex justify-space-between">
-            <v-progress-circular
-              v-if="editor.loading"
-              indeterminate />
             <v-btn
               color="info"
               text="Preview"
               variant="flat"
               class="mx-2"
               @click="() => editor.preview()" />
-            <v-btn
-              color="warning"
-              text="Save draft"
-              variant="flat"
-              class="mx-2"
-              @click="() => editor.saveDraft()" />
+            <div>
+              <div
+                v-if="editor.loading"
+                class="linear-progress-bar">
+                <v-progress-circular
+                  size="20"
+                  indeterminate />
+              </div>
+              <v-fade-transition>
+                <v-icon
+                  v-if="editor.success && !editor.loading"
+                  class="mx-2 text-success"
+                  :icon="mdiCheckCircle" />
+              </v-fade-transition>
+              <v-btn
+                color="warning"
+                text="Save draft"
+                variant="flat"
+                class="mx-2"
+                @click="() => editor.saveDraft()" />
+            </div>
           </div>
           <div class="my-5">
             <v-text-field

@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import type { Post } from "~/interfaces";
-import ExtendedEditor from "~/utils/tiptapEditor";
+import ExtendedEditor from "~/utils/extendedEditor";
 
-const post = ref<Partial<Post>>({ content: "<p>Start typing here...</p>" });
 const route = useRoute();
 const store = usePostsStore();
-
-let editor: ExtendedEditor | null = null;
+const editor = ref<ExtendedEditor>();
 
 const loadDraft = async () => {
   const draftId = route.params.id as string | undefined;
@@ -14,35 +12,38 @@ const loadDraft = async () => {
     return;
   }
 
-  const draft = store.getPostById(draftId);
-  if (draft) {
-    post.value = draft;
-    return;
-  }
-
   try {
-    const fetchedPost = await $fetch<Post>(`/api/post?postId=${draftId}`);
-    if (fetchedPost) {
-      post.value = fetchedPost;
-    }
+    return (
+      store.getPostById(draftId) ||
+      (await $fetch<Post[]>(`/api/post?postId=${draftId}`))[0]
+    );
   } catch (error) {
     console.error("Failed to load draft:", error);
+    return;
   }
 };
 
 onMounted(() => {
-  loadDraft().then(() => {
-    editor = new ExtendedEditor(post.value, store);
+  loadDraft().then((draft) => {
+    editor.value = new ExtendedEditor(store, draft);
   });
 });
 </script>
 
 <template>
   <v-container
+    v-if="editor"
     fluid
     class="pa-0 ma-0 fill-height">
-    <client-only placeholder="loading...">
+    <ClientOnly>
+      <template #fallback>
+        <div class="linear-progress-bar">
+          <v-progress-linear
+            color="primary"
+            indeterminate />
+        </div>
+      </template>
       <tiptap-editor :editor="editor" />
-    </client-only>
+    </ClientOnly>
   </v-container>
 </template>
