@@ -75,6 +75,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
     font-size: 2.75em;
     font-weight: 600;
     margin-bottom: 0.15em;
+    word-wrap: break-word;
   }
 
   .post-subtitle {

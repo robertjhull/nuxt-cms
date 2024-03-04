@@ -18,14 +18,20 @@ let selection = ref();
 const filteredPosts = computed(() => {
   const filter = tags[selection.value];
 
-  if (!filter || filter == "All") {
-    return [...store.posts, ...posts.value!];
+  switch (filter) {
+    case "All":
+      return [...store.posts, ...posts.value!];
+    case "Draft":
+      return [...store.posts, ...posts.value!].filter(
+        (p) => p.status === "draft"
+      );
+    case "Published":
+      return [...store.posts, ...posts.value!].filter(
+        (p) => p.status === "published"
+      );
+    default:
+      return [];
   }
-
-  return [
-    ...store.posts,
-    ...posts.value.filter((p) => p.status == filter.toLowerCase()) : null,
-  ];
 });
 
 const search = ref("");
