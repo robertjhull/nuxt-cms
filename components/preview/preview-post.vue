@@ -49,7 +49,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
 
     <!-- Comments Section -->
     <v-sheet class="bg-transparent">
-      <h2 class="px-4 text-white">
+      <h2 class="px-4">
         Comments ({{
           post.comments && post.comments.length ? post.comments.length : "0"
         }})

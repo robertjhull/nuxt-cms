@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import type { Post } from "~/interfaces";
 
-const { data: posts } = await useFetch("/api/post");
-
 interface SidebarLink {
   type?: "subheader";
-  id?: string | undefined;
+  id?: string;
   title: string;
 }
 
-function sidebarLinks(): SidebarLink[] {
-  const links: SidebarLink[] = [];
-  let prevDate: string | null;
+const { data: posts } = await useAsyncData<Post[]>("posts", () =>
+  $fetch("/api/post")
+);
 
-  (posts.value as Post[])?.forEach((post) => {
+const sidebarLinks = computed(() => {
+  const links: SidebarLink[] = [];
+  let prevDate: string | null = null;
+
+  posts.value?.forEach((post) => {
     if (!post.published) {
       return;
     }
@@ -31,7 +33,7 @@ function sidebarLinks(): SidebarLink[] {
   });
 
   return links;
-}
+});
 </script>
 
 <template>
@@ -40,7 +42,7 @@ function sidebarLinks(): SidebarLink[] {
       dense
       class="bg-transparent">
       <v-list-item
-        v-for="link in sidebarLinks()"
+        v-for="link in sidebarLinks"
         :key="link.title">
         <template
           v-if="link.type == 'subheader'"

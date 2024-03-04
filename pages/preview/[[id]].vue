@@ -45,7 +45,12 @@ watch(
     v-if="settings"
     fluid
     class="pa-0"
-    :style="{ backgroundColor: settings.pageColor }">
+    :style="{
+      backgroundColor: settings.pageColor,
+      fontFamily: settings.fontFamily.value,
+      color: settings.textColor,
+      minHeight: '100dvh',
+    }">
     <return-to-dashboard />
 
     <!-- Header Image -->
@@ -53,7 +58,7 @@ watch(
       <v-img
         class="header-image"
         :src="settings.headerImage"
-        gradient="to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)"
+        gradient="to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.5)"
         width="100%"
         height="15dvw"
         cover>

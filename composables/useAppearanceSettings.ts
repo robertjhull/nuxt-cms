@@ -16,8 +16,7 @@ export default function () {
     pending,
     error,
   } = useAsyncData<Settings>("appearance-settings", () => {
-    const cacheBuster = new Date().getTime();
-    return $fetch(`/api/settings/?t=${cacheBuster}`);
+    return $fetch(`/api/settings/`);
   });
 
   const defaultSettings = reactive<Settings>({

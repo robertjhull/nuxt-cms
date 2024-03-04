@@ -1,21 +1,31 @@
+import { Post } from "~/interfaces";
+
 const config = useRuntimeConfig();
 
 export default defineEventHandler(async (event) => {
+  console.log("fired post.get.ts");
+
   const query = getQuery(event);
   try {
-    const posts = await $fetch(`${config.functionsBaseUrl}post/getPreview`, {
-      method: "GET",
-      query: query.postId
-        ? { userId: config.defaultUserId, postId: query.postId }
-        : { userId: config.defaultUserId },
+    const data = query.postId
+      ? { userId: config.defaultUserId, postId: query.postId }
+      : { userId: config.defaultUserId };
+
+    const { body: posts, statusCode } = await $fetch<{
+      body?: Post[];
+      statusCode: number;
+    }>(`${config.functionsBaseUrl}post/getPreview?blocking=true&result=true`, {
+      method: "POST",
+      body: data,
       headers: {
-        Authorization: `Bearer ${config.functionsAuthToken}`,
+        ContentType: `application/json`,
+        Authorization: `Basic ${config.functionsAuthToken}`,
       },
     });
 
-    if (!posts) {
+    if (statusCode !== 200) {
       return createError({
-        statusCode: 404,
+        statusCode: statusCode,
         message: "Failed to get posts",
       });
     }
