@@ -5,19 +5,15 @@ import { usePostsStore } from "~/stores/posts";
 
 const route = useRoute();
 const postsStore = usePostsStore();
+const { settings } = useAppearanceSettings();
 
 const postId = computed(() => route.params.id as string | undefined);
 
-const { settings } = useAppearanceSettings();
-
-let initialPost = postId.value
-  ? postsStore.getPostById(postId.value as string)
-  : null;
-const publishedPosts = ref<Post[]>(initialPost ? [initialPost] : []);
+const publishedPosts = ref<Post[]>([]);
 
 watch(
   postId,
-  async (newId, oldId) => {
+  async (newId) => {
     if (!newId) {
       const posts = await $fetch<Post[]>("/api/post");
       publishedPosts.value = posts || [];

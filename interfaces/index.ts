@@ -36,4 +36,5 @@ export interface Comment {
   replies: Comment[];
   post: Post;
   status: "pending" | "approved" | "trash";
+  expanded: boolean;
 }

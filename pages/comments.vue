@@ -34,8 +34,10 @@ const statusColor = (status: string) => {
 const headers = [
   { key: "status", title: "Status" },
   { key: "text", sortable: false, title: "Comment" },
+  { key: "postTitle", title: "Post" },
   { key: "author.name", title: "Author" },
   { key: "created", title: "Date" },
+  {},
 ];
 
 const { formatShortDate } = useFormattedDate();
@@ -99,12 +101,10 @@ onMounted(() => (selection.value = 0));
           class="pa-2"
           :loading="pending"
           :headers="headers"
-          :items="filteredComments"
-          expand-on-click
-          show-expand>
-          <template #item="{ item, internalItem, isExpanded, toggleExpand }">
+          :items="filteredComments">
+          <template #item="{ item }">
             <tr>
-              <td width="10%">
+              <td>
                 <v-chip
                   class="mr-2"
                   variant="flat"
@@ -113,18 +113,24 @@ onMounted(() => (selection.value = 0));
               </td>
               <td
                 style="
-                  max-width: 100px;
-                  max-height: 50px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
                 ">
                 <strong>{{ item.text }}</strong>
               </td>
-              <td width="15%">
+              <td
+                style="
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                ">
+                <strong>{{ item.postTitle }}</strong>
+              </td>
+              <td>
                 {{ item.authorName }}
               </td>
-              <td width="20%">
+              <td>
                 <span style="font-size: 0.75rem">{{
                   datePosted(item.created)
                 }}</span>
@@ -144,16 +150,12 @@ onMounted(() => (selection.value = 0));
                   @click="updateComment(item, 'trash')" />
                 <v-btn
                   variant="plain"
-                  :icon="
-                    isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown
-                  "
-                  @click="toggleExpand(internalItem)" />
+                  :icon="item.expanded ? mdiChevronUp : mdiChevronDown"
+                  @click="item.expanded = !item.expanded" />
               </td>
             </tr>
-          </template>
-          <template #expanded-row="{ columns, item }">
-            <tr>
-              <td :colspan="columns.length">
+            <tr v-show="item.expanded">
+              <td :colspan="12">
                 {{ item.text }}
               </td>
             </tr>

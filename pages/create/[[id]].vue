@@ -19,7 +19,7 @@ const loadDraft = async () => {
 
   try {
     const posts = await $fetch<Post[]>(`/api/post?postId=${draftId}`);
-    return posts[0];
+    return posts[0] || ({} as Post);
   } catch (error) {
     console.error("Failed to load draft:", error);
     return {} as Post;

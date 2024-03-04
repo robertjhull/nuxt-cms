@@ -21,6 +21,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
         fontFamily: settings.fontFamily.value,
       }">
       <div class="post-title">{{ post.title }}</div>
+      <div class="post-subtitle">{{ post.subtitle }}</div>
       <div class="post-meta">
         <span class="author">By {{ post.authorName }}</span>
         <time
