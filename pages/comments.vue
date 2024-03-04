@@ -96,71 +96,73 @@ onMounted(() => (selection.value = 0));
             </v-col>
           </v-row>
         </template>
-        <v-data-table
-          v-if="filteredComments"
-          class="pa-2"
-          :loading="pending"
-          :headers="headers"
-          :items="filteredComments">
-          <template #item="{ item }">
-            <tr>
-              <td>
-                <v-chip
-                  class="mr-2"
-                  variant="flat"
-                  :text="item.status"
-                  :color="statusColor(item.status)" />
-              </td>
-              <td
-                style="
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                ">
-                <strong>{{ item.text }}</strong>
-              </td>
-              <td
-                style="
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                ">
-                <strong>{{ item.postTitle }}</strong>
-              </td>
-              <td>
-                {{ item.authorName }}
-              </td>
-              <td>
-                <span style="font-size: 0.75rem">{{
-                  datePosted(item.created)
-                }}</span>
-              </td>
-              <td class="d-flex justify-end">
-                <v-btn
-                  v-if="item.status == 'pending'"
-                  color="success"
-                  variant="plain"
-                  :icon="mdiCheck"
-                  @click="updateComment(item, 'approved')" />
-                <v-btn
-                  v-if="item.status != 'trash'"
-                  variant="plain"
-                  color="error"
-                  :icon="mdiTrashCan"
-                  @click="updateComment(item, 'trash')" />
-                <v-btn
-                  variant="plain"
-                  :icon="item.expanded ? mdiChevronUp : mdiChevronDown"
-                  @click="item.expanded = !item.expanded" />
-              </td>
-            </tr>
-            <tr v-show="item.expanded">
-              <td :colspan="12">
-                {{ item.text }}
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
+        <client-only>
+          <v-data-table
+            v-if="filteredComments"
+            class="pa-2"
+            :loading="pending"
+            :headers="headers"
+            :items="filteredComments">
+            <template #item="{ item }">
+              <tr>
+                <td>
+                  <v-chip
+                    class="mr-2"
+                    variant="flat"
+                    :text="item.status"
+                    :color="statusColor(item.status)" />
+                </td>
+                <td
+                  style="
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  ">
+                  {{ item.text }}
+                </td>
+                <td
+                  style="
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  ">
+                  <strong>{{ item.postTitle }}</strong>
+                </td>
+                <td>
+                  {{ item.authorName }}
+                </td>
+                <td>
+                  <span style="font-size: 0.75rem">{{
+                    datePosted(item.created)
+                  }}</span>
+                </td>
+                <td class="d-flex justify-end">
+                  <v-btn
+                    v-if="item.status == 'pending'"
+                    color="success"
+                    variant="plain"
+                    :icon="mdiCheck"
+                    @click="updateComment(item, 'approved')" />
+                  <v-btn
+                    v-if="item.status != 'trash'"
+                    variant="plain"
+                    color="error"
+                    :icon="mdiTrashCan"
+                    @click="updateComment(item, 'trash')" />
+                  <v-btn
+                    variant="plain"
+                    :icon="item.expanded ? mdiChevronUp : mdiChevronDown"
+                    @click="item.expanded = !item.expanded" />
+                </td>
+              </tr>
+              <tr v-if="item.expanded">
+                <td :colspan="12">
+                  {{ item.text }}
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+        </client-only>
       </v-card>
     </v-row>
   </v-container>

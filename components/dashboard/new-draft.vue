@@ -38,27 +38,29 @@ const saveDraft = async () => {
     <v-expand-transition>
       <div v-show="show">
         <v-sheet class="pa-4">
-          <v-form
-            ref="formRef"
-            @submit.prevent="saveDraft"
-            validate-on="submit">
-            <v-text-field
-              label="Title"
-              v-model="title"
-              :rules="[(title) => !!title || 'Title is required']" />
-            <v-textarea
-              label="Content"
-              v-model="content"
-              :rules="[(content) => !!content || 'Content is required']" />
-            <v-row class="justify-end">
-              <v-btn
-                type="submit"
-                color="info"
-                class="ma-3"
-                :prepend-icon="mdiNote"
-                text="save as draft" />
-            </v-row>
-          </v-form>
+          <client-only>
+            <v-form
+              ref="formRef"
+              @submit.prevent="saveDraft"
+              validate-on="submit">
+              <v-text-field
+                label="Title"
+                v-model="title"
+                :rules="[(title) => !!title || 'Title is required']" />
+              <v-textarea
+                label="Content"
+                v-model="content"
+                :rules="[(content) => !!content || 'Content is required']" />
+              <v-row class="justify-end">
+                <v-btn
+                  type="submit"
+                  color="info"
+                  class="ma-3"
+                  :prepend-icon="mdiNote"
+                  text="save as draft" />
+              </v-row>
+            </v-form>
+          </client-only>
         </v-sheet>
       </div>
     </v-expand-transition>
