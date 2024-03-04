@@ -10,6 +10,8 @@ const {
   return $fetch("/api/post");
 });
 
+const store = usePostsStore();
+
 const tags = ["All", "Draft", "Published"];
 let selection = ref();
 
@@ -17,10 +19,13 @@ const filteredPosts = computed(() => {
   const filter = tags[selection.value];
 
   if (!filter || filter == "All") {
-    return posts.value;
+    return [...store.posts, ...posts.value!];
   }
 
-  return posts.value?.filter((p) => p.status == filter.toLowerCase());
+  return [
+    ...store.posts,
+    ...posts.value.filter((p) => p.status == filter.toLowerCase()) : null,
+  ];
 });
 
 const search = ref("");
