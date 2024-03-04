@@ -1,28 +1,34 @@
-const config = useRuntimeConfig();
-
 export default defineEventHandler(async (event) => {
-  const { newAppearanceSettings } = await readBody(event);
+  const config = useRuntimeConfig();
+  const newAppearanceSettings = await readBody(event);
 
   try {
-    const updated: boolean = await $fetch(
-      `${config.functionsBaseUrl}user/updateSettings`,
+    const { body: success, statusCode } = await $fetch<{
+      body?: boolean | string;
+      statusCode: number;
+    }>(
+      `${config.functionsBaseUrl}user/updateSettings?blocking=true&result=true`,
       {
-        method: "PATCH",
+        method: "POST",
         body: {
           userId: config.defaultUserId,
           ...newAppearanceSettings,
         },
+        headers: {
+          ContentType: `application/json`,
+          Authorization: `Basic ${config.functionsAuthToken}`,
+        },
       }
     );
 
-    if (!updated) {
+    if (statusCode !== 200) {
       return createError({
-        statusCode: 404,
+        statusCode: statusCode,
         message: "Failed to update settings",
       });
     }
 
-    return updated;
+    return success;
   } catch (error) {
     console.error(error);
     return createError({

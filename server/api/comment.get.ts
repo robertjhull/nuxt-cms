@@ -1,15 +1,15 @@
-import { Settings } from "~/interfaces";
+import { Comment } from "~/interfaces";
 
 const config = useRuntimeConfig();
 
 export default defineEventHandler(async (event) => {
   try {
-    const { body: settings, statusCode } = await $fetch<{
-      body?: Settings | string;
+    const { body: comments, statusCode } = await $fetch<{
+      body?: Comment[] | string;
       statusCode: number;
-    }>(`${config.functionsBaseUrl}user/getSettings?blocking=true&result=true`, {
+    }>(`${config.functionsBaseUrl}comment/getAll?blocking=true&result=true`, {
       method: "POST",
-      body: { userId: config.defaultUserId },
+      query: { userId: config.defaultUserId },
       headers: {
         ContentType: `application/json`,
         Authorization: `Basic ${config.functionsAuthToken}`,
@@ -19,11 +19,11 @@ export default defineEventHandler(async (event) => {
     if (statusCode !== 200) {
       return createError({
         statusCode: statusCode,
-        message: "Failed to get settings",
+        message: "Failed to get comments",
       });
     }
 
-    return settings;
+    return comments;
   } catch (error) {
     console.error(error);
     return createError({

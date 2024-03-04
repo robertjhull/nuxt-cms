@@ -11,25 +11,32 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const updatedComment: boolean = await $fetch(
-      `${config.functionsBaseUrl}comment/updateStatus`,
+    const { body: success, statusCode } = await $fetch<{
+      body?: boolean | string;
+      statusCode: number;
+    }>(
+      `${config.functionsBaseUrl}comment/updateStatus?blocking=true&result=true`,
       {
-        method: "PATCH",
+        method: "POST",
         body: {
           commentId,
           status,
         },
+        headers: {
+          ContentType: `application/json`,
+          Authorization: `Basic ${config.functionsAuthToken}`,
+        },
       }
     );
 
-    if (!updatedComment) {
+    if (statusCode !== 200) {
       return createError({
-        statusCode: 404,
-        message: "Failed to update comment status",
+        statusCode: statusCode,
+        message: "Failed to get update comment",
       });
     }
 
-    return updatedComment;
+    return success;
   } catch (error) {
     console.error(error);
     return createError({

@@ -4,20 +4,24 @@ const config = useRuntimeConfig();
 
 export default defineEventHandler(async (event) => {
   try {
-    const user: User = await $fetch(
-      `${config.functionsBaseUrl}user/getDashboard`,
+    const { body: user, statusCode } = await $fetch<{
+      body?: User | string;
+      statusCode: number;
+    }>(
+      `${config.functionsBaseUrl}user/getDashboard?blocking=true&result=true`,
       {
-        method: "GET",
-        query: { userId: config.defaultUserId },
+        method: "POST",
+        body: { userId: config.defaultUserId },
         headers: {
-          Authorization: `Bearer ${config.functionsAuthToken}`,
+          ContentType: `application/json`,
+          Authorization: `Basic ${config.functionsAuthToken}`,
         },
       }
     );
 
-    if (!user) {
+    if (statusCode !== 200) {
       return createError({
-        statusCode: 404,
+        statusCode: statusCode,
         message: "Failed to get user dashboard",
       });
     }
