@@ -8,19 +8,16 @@ import { Editor } from "@tiptap/vue-3";
 import type { Post } from "~/interfaces";
 
 export default class ExtendedEditor extends Editor {
-  id?: string | undefined;
-  title?: string | null;
-  subtitle?: string | null;
+  id: string;
+  title: Ref<string>;
+  subtitle: Ref<string>;
   loading: boolean = false;
-  error: string[] = [];
+  errors: string[] = [];
   store: ReturnType<typeof usePostsStore>;
 
-  constructor(
-    post: Post | Partial<Post>,
-    piniaStore: ReturnType<typeof usePostsStore>
-  ) {
+  constructor(piniaStore: ReturnType<typeof usePostsStore>, post?: Post) {
     super({
-      content: post.content,
+      content: post?.content || "<p>Start typing here...</p>",
       extensions: [
         StarterKit,
         Highlight,
@@ -31,32 +28,38 @@ export default class ExtendedEditor extends Editor {
       ],
     });
 
-    this.id = post._id;
-    this.title = post.title;
-    this.subtitle = post.subtitle;
-
     this.store = piniaStore;
+
+    post ??= this.newDraft();
+
+    this.id = post._id;
+    this.title = ref(post.title);
+    this.subtitle = ref(post.subtitle);
   }
 
-  valid(): boolean {
-    if (!this.title) this.error.push("Title is required!");
-    if (!this.subtitle) this.error.push("Subtitle is required!");
-    if (this.isEmpty) this.error.push("Content is required!");
-
-    return this.error.length == 0;
+  newDraft(): Post {
+    return {
+      _id: this.store.getDraftId(),
+      title: "",
+      subtitle: "",
+      content: "",
+      authorName: "Demo User",
+      comments: [],
+      created: new Date().toDateString(),
+      status: "draft",
+    };
   }
 
-  async saveDraft(): Promise<string | boolean> {
+  async saveDraft(): Promise<string> {
     this.loading = true;
-    this.error = [];
-
-    if (!this.valid()) return false;
+    this.errors = [];
 
     const newDraft = {
-      _id: this.store.getDraftId(),
-      title: this.title,
-      subtitle: this.subtitle,
+      _id: this.id,
+      title: this.title.value,
+      subtitle: this.subtitle.value,
       content: this.getHTML(),
+      status: "draft",
     } as Post;
 
     this.store.addPost(newDraft);

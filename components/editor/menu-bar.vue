@@ -18,7 +18,7 @@ import {
   mdiFormatStrikethroughVariant,
   mdiFormatTextWrappingWrap,
 } from "@mdi/js";
-import ExtendedEditor from "~/utils/tiptapEditor";
+import ExtendedEditor from "~/utils/extendedEditor";
 
 const props = defineProps<{ editor: ExtendedEditor }>();
 
@@ -158,3 +158,4 @@ const items = [
     </template>
   </v-row>
 </template>
+~/utils/extendedEditor

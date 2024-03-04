@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import { mdiChevronDown, mdiChevronUp, mdiNote } from "@mdi/js";
-import type { Post } from "~/interfaces";
 
 const router = useRouter();
 const store = usePostsStore();
 const show = ref(true);
+
 const title = ref<string>();
-const content = ref();
+const content = ref<string>();
 
 const saveDraft = async () => {
-  const draft = {
-    _id: store.getDraftId(),
-    title: title.value,
-    subtitle: "",
-    content: content.value,
-  } as Post;
-  const id = store.addPost(draft);
+  const id = store.addDraft(title.value!, content.value!);
   router.push(`/create/${id}`);
 };
 </script>
@@ -35,13 +29,17 @@ const saveDraft = async () => {
     <v-expand-transition>
       <div v-show="show">
         <v-sheet class="pa-4">
-          <v-form @submit="saveDraft">
+          <v-form
+            @submit="saveDraft"
+            validate-on="submit">
             <v-text-field
               label="Title"
-              v-model="title" />
+              v-model="title"
+              :rules="[(title) => !!title || 'Title is required']" />
             <v-textarea
               label="Content"
-              v-model="content" />
+              v-model="content"
+              :rules="[(content) => !!content || 'Content is required']" />
             <v-row class="justify-end">
               <v-btn
                 type="submit"

@@ -1,15 +1,30 @@
 <script setup lang="ts">
 import { EditorContent } from "@tiptap/vue-3";
 import { useTheme } from "vuetify";
-import type ExtendedEditor from "~/utils/tiptapEditor";
+import type ExtendedEditor from "~/utils/extendedEditor";
 
 const editor = defineModel<ExtendedEditor>("editor", { required: true });
+
+const title = computed({
+  get: () => editor.value.title?.value,
+  set: (value) => {
+    editor.value.title.value = value;
+  },
+});
+
+const subtitle = computed({
+  get: () => editor.value.subtitle?.value,
+  set: (value) => {
+    editor.value.subtitle.value = value;
+  },
+});
 
 const theme = useTheme();
 </script>
 
 <template>
   <v-row
+    v-if="editor"
     no-gutters
     class="fill-height">
     <v-sheet class="bg-background-darken-3 w-100">
@@ -31,35 +46,32 @@ const theme = useTheme();
             'bg-background-darken-1': !theme.current.value.dark,
           }">
           <div class="d-flex justify-space-between">
+            <v-progress-circular
+              v-if="editor.loading"
+              indeterminate />
             <v-btn
               color="info"
               text="Preview"
               variant="flat"
               class="mx-2"
-              @click="editor.preview" />
+              @click="() => editor.preview()" />
             <v-btn
               color="warning"
               text="Save draft"
               variant="flat"
               class="mx-2"
-              @click="editor.saveDraft" />
-            <v-btn
-              color="success"
-              variant="flat"
-              text="Publish"
-              class="mx-2"
-              disabled />
+              @click="() => editor.saveDraft()" />
           </div>
           <div class="my-5">
             <v-text-field
-              :model-value="editor.title"
+              v-model="title"
               bg-color="background"
               label="Title"
               variant="solo"
               class="ma-2"
               hide-details />
             <v-text-field
-              :model-value="editor.subtitle"
+              v-model="subtitle"
               bg-color="background"
               label="Subtitle"
               variant="solo"
@@ -171,3 +183,4 @@ const theme = useTheme();
   }
 }
 </style>
+~/utils/extendedEditor

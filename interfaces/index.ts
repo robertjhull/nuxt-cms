@@ -23,7 +23,7 @@ export interface Post {
   content: string;
   comments: Comment[];
   created: string;
-  published: string;
+  published?: string;
   status: "draft" | "published";
 }
 
