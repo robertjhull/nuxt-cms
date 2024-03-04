@@ -72,15 +72,17 @@ onMounted(() => (selection.value = 0));
         class="pa-4 w-100">
         <template #title>
           <v-row class="d-flex align-center">
-            <v-col class="d-flex align-center"
-              ><v-text-field
-                v-model="search"
-                label="Search"
-                variant="outlined"
-                :prepend-inner-icon="mdiMagnify"
-                single-line
-                hide-details
-            /></v-col>
+            <v-col class="d-flex align-center">
+              <client-only>
+                <v-text-field
+                  v-model="search"
+                  label="Search"
+                  variant="outlined"
+                  :prepend-inner-icon="mdiMagnify"
+                  single-line
+                  hide-details />
+              </client-only>
+            </v-col>
             <v-col class="d-flex justify-center">
               <v-chip-group
                 mandatory
@@ -104,43 +106,45 @@ onMounted(() => (selection.value = 0));
             </v-col>
           </v-row>
         </template>
-        <v-data-table
-          v-if="filteredPosts"
-          class="pa-2"
-          :loading="pending"
-          :headers="headers"
-          :items="filteredPosts"
-          :search="search">
-          <template #item="{ item }">
-            <tr>
-              <td width="20">
-                <v-chip
-                  class="mr-2"
-                  variant="flat"
-                  :text="item.status"
-                  :color="item.status == 'draft' ? 'warning' : 'success'" />
-              </td>
-              <td>
-                <strong>{{ item.title }}</strong>
-              </td>
-              <td>
-                {{ item.authorName }}
-              </td>
-              <td>
-                <em v-if="item.published">{{
-                  datePublished(item.published)
-                }}</em>
-              </td>
-              <td width="10">
-                <nuxt-link :to="'/create/' + item._id">
-                  <v-btn
+        <client-only>
+          <v-data-table
+            v-if="filteredPosts"
+            class="pa-2"
+            :loading="pending"
+            :headers="headers"
+            :items="filteredPosts"
+            :search="search">
+            <template #item="{ item }">
+              <tr>
+                <td width="20">
+                  <v-chip
+                    class="mr-2"
                     variant="flat"
-                    :icon="mdiPencil" />
-                </nuxt-link>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
+                    :text="item.status"
+                    :color="item.status == 'draft' ? 'warning' : 'success'" />
+                </td>
+                <td>
+                  <strong>{{ item.title }}</strong>
+                </td>
+                <td>
+                  {{ item.authorName }}
+                </td>
+                <td>
+                  <em v-if="item.published">{{
+                    datePublished(item.published)
+                  }}</em>
+                </td>
+                <td width="10">
+                  <nuxt-link :to="'/create/' + item._id">
+                    <v-btn
+                      variant="flat"
+                      :icon="mdiPencil" />
+                  </nuxt-link>
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+        </client-only>
       </v-card>
     </v-row>
   </v-container>
