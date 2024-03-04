@@ -1,3 +1,5 @@
 # Nuxt App with Cloud Functions
 
-Trying out cloud functions with a basic content management app built with Nuxt and Vuetify.
+Trying out server-side rendering and cloud functions with a basic content management app built in Nuxt.
+
+*Tools*: Nuxt 3, Vuetify, Pinia, Cloud Functions, Terraform
