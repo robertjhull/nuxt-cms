@@ -11,14 +11,10 @@ export default class ExtendedEditor extends Editor {
   id: string;
   title: Ref<string>;
   subtitle: Ref<string>;
-  loading: boolean = false;
-  errors: string[] = [];
-  success: boolean = false;
-  store: ReturnType<typeof usePostsStore>;
 
-  constructor(piniaStore: ReturnType<typeof usePostsStore>, post?: Post) {
+  constructor(post: Post) {
     super({
-      content: post?.content || "<p>Start typing here...</p>",
+      content: post.content || "<p>Start typing here...</p>",
       extensions: [
         StarterKit,
         Highlight,
@@ -29,53 +25,8 @@ export default class ExtendedEditor extends Editor {
       ],
     });
 
-    this.store = piniaStore;
-
-    post ??= this.newDraft();
-
     this.id = post._id;
     this.title = ref(post.title);
     this.subtitle = ref(post.subtitle);
-  }
-
-  newDraft(): Post {
-    return {
-      _id: this.store.getDraftId(),
-      title: "",
-      subtitle: "",
-      content: "",
-      authorName: "Demo User",
-      comments: [],
-      created: new Date().toDateString(),
-      status: "draft",
-    };
-  }
-
-  async saveDraft(): Promise<string> {
-    this.loading = true;
-    this.success = false;
-    this.errors = [];
-
-    const newDraft = {
-      _id: this.id,
-      title: this.title.value,
-      subtitle: this.subtitle.value,
-      content: this.getHTML(),
-      authorName: "Demo User",
-      status: "draft",
-      created: new Date().toDateString(),
-    } as Post;
-
-    this.store.addPost(newDraft);
-
-    this.loading = false;
-    this.success = true;
-    return newDraft._id;
-  }
-
-  async preview(): Promise<void> {
-    const draftId = await this.saveDraft();
-    const router = useRouter();
-    router.push(`/preview/${draftId}`);
   }
 }

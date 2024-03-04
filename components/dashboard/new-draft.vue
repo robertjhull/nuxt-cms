@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { mdiChevronDown, mdiChevronUp, mdiNote } from "@mdi/js";
 import type { VForm } from "vuetify/components/VForm";
-import type { Post } from "~/interfaces";
 
 const router = useRouter();
 const store = usePostsStore();
@@ -16,16 +15,11 @@ const saveDraft = async () => {
     return;
   }
 
-  const draftPost = {
-    _id: store.getDraftId(),
-    title: title.value,
-    subtitle: "",
-    content: content.value,
-    authorName: "Demo User",
-  } as Post;
-
-  const id = store.addPost(draftPost);
-  router.push(`/create/${id}`);
+  const draftId = store.createAndSaveDraft(
+    title.value as string,
+    content.value as string
+  );
+  router.push(`/create/${draftId}`);
 };
 </script>
 

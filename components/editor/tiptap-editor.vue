@@ -5,6 +5,8 @@ import { useTheme } from "vuetify";
 import type ExtendedEditor from "~/utils/extendedEditor";
 
 const editor = defineModel<ExtendedEditor>("editor", { required: true });
+const store = usePostsStore();
+const router = useRouter();
 
 const title = computed({
   get: () => editor.value.title?.value,
@@ -19,6 +21,29 @@ const subtitle = computed({
     editor.value.subtitle.value = value;
   },
 });
+
+const saving = ref(false);
+const success = ref(false);
+
+const preview = () => {
+  const draftId = saveDraft();
+  router.push(`/preview/${draftId}`);
+};
+
+const saveDraft = () => {
+  saving.value = true;
+
+  const draftId = store.createAndSaveDraft(
+    editor.value.title.value,
+    editor.value.getHTML(),
+    editor.value.subtitle.value
+  );
+
+  saving.value = false;
+  success.value = true;
+
+  return draftId;
+};
 
 const theme = useTheme();
 </script>
@@ -52,10 +77,10 @@ const theme = useTheme();
               text="Preview"
               variant="flat"
               class="mx-2"
-              @click="() => editor.preview()" />
+              @click="preview" />
             <div>
               <div
-                v-if="editor.loading"
+                v-if="saving"
                 class="linear-progress-bar">
                 <v-progress-circular
                   size="20"
@@ -63,7 +88,7 @@ const theme = useTheme();
               </div>
               <v-fade-transition>
                 <v-icon
-                  v-if="editor.success && !editor.loading"
+                  v-if="success && !saving"
                   class="mx-2 text-success"
                   :icon="mdiCheckCircle" />
               </v-fade-transition>
@@ -72,7 +97,7 @@ const theme = useTheme();
                 text="Save draft"
                 variant="flat"
                 class="mx-2"
-                @click="() => editor.saveDraft()" />
+                @click="saveDraft" />
             </div>
           </div>
           <div class="my-5">

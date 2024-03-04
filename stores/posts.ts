@@ -16,6 +16,19 @@ export const usePostsStore = defineStore("posts", {
       }
       return post._id;
     },
+    createAndSaveDraft(title: string, content: string, subtitle?: string) {
+      const draftPost: Post = {
+        _id: this.getDraftId(),
+        title,
+        subtitle: subtitle || "",
+        content,
+        authorName: "Demo User",
+        status: "draft",
+        created: new Date().toDateString(),
+        comments: [],
+      };
+      return this.addPost(draftPost);
+    },
     getPostById(id: string) {
       return this.posts.find((post) => post._id === id);
     },

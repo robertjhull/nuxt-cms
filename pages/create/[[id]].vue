@@ -8,24 +8,27 @@ const editor = ref<ExtendedEditor>();
 
 const loadDraft = async () => {
   const draftId = route.params.id as string | undefined;
+
   if (!draftId) {
-    return;
+    return {} as Post;
+  }
+
+  if (draftId.includes("draft")) {
+    return store.getPostById(draftId) || ({} as Post);
   }
 
   try {
-    return (
-      store.getPostById(draftId) ||
-      (await $fetch<Post[]>(`/api/post?postId=${draftId}`))[0]
-    );
+    const posts = await $fetch<Post[]>(`/api/post?postId=${draftId}`);
+    return posts[0];
   } catch (error) {
     console.error("Failed to load draft:", error);
-    return;
+    return {} as Post;
   }
 };
 
 onMounted(() => {
   loadDraft().then((draft) => {
-    editor.value = new ExtendedEditor(store, draft);
+    editor.value = new ExtendedEditor(draft);
   });
 });
 </script>
