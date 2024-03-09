@@ -56,11 +56,16 @@ const theme = useTheme();
     <v-sheet class="bg-background-darken-3 w-100">
       <v-row
         no-gutters
-        class="fill-height">
-        <v-col cols="9">
+        class="fill-height justify-space-between">
+        <v-col
+          cols="7"
+          offset="1">
           <v-sheet
             class="my-12 mx-16 pa-12 editor"
             elevation="10">
+            <div class="post-title">{{ title }}</div>
+            <div class="post-subtitle">{{ subtitle }}</div>
+            <v-divider class="my-10" />
             <editor-content :editor="editor" />
           </v-sheet>
         </v-col>
@@ -128,6 +133,18 @@ const theme = useTheme();
 <style scoped lang="scss">
 .editor {
   min-height: 90vh;
+}
+
+.post-title {
+  font-size: 2.75em;
+  font-weight: 600;
+  margin-bottom: 0.15em;
+  word-wrap: break-word;
+}
+
+.post-subtitle {
+  font-size: 1.25em;
+  margin-bottom: 0.15em;
 }
 </style>
 
