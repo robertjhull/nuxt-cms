@@ -3,7 +3,7 @@ import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import type { Comment } from "~/interfaces";
 
 const recentComments = defineModel<Comment[]>({ required: true });
-
+const router = useRouter();
 const show = ref(true);
 
 const statusColor = (status: string) => {
@@ -16,12 +16,16 @@ const statusColor = (status: string) => {
 
 const { formatShortDate } = useFormattedDate();
 const format = (datetime: string): string => formatShortDate(datetime);
+
+const viewComments = () => {
+  router.push(`/comments`);
+};
 </script>
 
 <template>
   <v-card class="pa-2">
     <template #prepend>
-      <div variant="text">RECENT COMMENTS</div>
+      <div><strong>Recent Comments</strong></div>
     </template>
     <template #append>
       <v-card-actions>
@@ -37,7 +41,9 @@ const format = (datetime: string): string => formatShortDate(datetime);
             v-for="(comment, index) in recentComments"
             :key="comment._id">
             <v-divider v-if="index != 0" />
-            <v-sheet class="ma-4 mb-8 pl-2 comment">
+            <v-sheet
+              class="ma-4 mb-8 pl-2 comment"
+              @click="viewComments">
               <v-row
                 no-gutters
                 style="

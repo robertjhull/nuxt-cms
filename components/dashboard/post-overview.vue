@@ -3,17 +3,21 @@ import { mdiChevronDown, mdiChevronUp, mdiCommentTextOutline } from "@mdi/js";
 import type { Post } from "~/interfaces";
 
 const recentlyPublished = defineModel<Post[]>({ required: true });
-
+const router = useRouter();
 const show = ref(true);
 
 const { formatLongDate } = useFormattedDate();
 const format = (datetime: string): string => formatLongDate(datetime);
+
+const viewPost = (post: Post) => {
+  router.push(`/preview/${post._id}`);
+};
 </script>
 
 <template>
   <v-card class="pa-2">
     <template #prepend>
-      <div variant="text">RECENT POSTS</div>
+      <div><strong>Recent Posts</strong></div>
     </template>
     <template #append>
       <v-card-actions>
@@ -29,7 +33,9 @@ const format = (datetime: string): string => formatLongDate(datetime);
             v-for="(post, index) in recentlyPublished"
             :key="post._id">
             <v-divider v-if="index != 0" />
-            <div class="d-flex justify-space-between recent-post align-center">
+            <div
+              class="d-flex justify-space-between recent-post align-center"
+              @click="viewPost(post)">
               <v-col cols="8">
                 <v-list-item-title>{{ post.title }}</v-list-item-title>
                 <v-list-item-subtitle>{{

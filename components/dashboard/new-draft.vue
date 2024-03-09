@@ -26,7 +26,7 @@ const saveDraft = async () => {
 <template>
   <v-card class="pa-2">
     <template #prepend>
-      <div>NEW DRAFT</div>
+      <div><strong>New Draft</strong></div>
     </template>
     <template #append>
       <v-card-actions>

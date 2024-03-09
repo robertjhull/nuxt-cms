@@ -12,7 +12,7 @@ const {
 
 <template>
   <v-container
-    class="pa-0 ma-0 fill-height"
+    class="pa-0 ma-0 fill-height align-start"
     fluid>
     <div
       v-if="pending"
