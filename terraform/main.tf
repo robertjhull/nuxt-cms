@@ -7,31 +7,51 @@ data "digitalocean_ssh_key" "terraform" {
 }
 
 resource "digitalocean_droplet" "web" {
-  image  = "docker-23-10"
+  image  = "ubuntu-23-10-x64"
   name   = "nuxt-cms-droplet"
   region = "sfo3"
   size   = "s-1vcpu-1gb"
   ssh_keys = [
     data.digitalocean_ssh_key.terraform.fingerprint
   ]
+}
+
+resource "null_resource" "dependencies" {
+  triggers = {
+    deps_hash = "${filesha256("./provision/install-deps.sh")}"
+  }
 
   provisioner "remote-exec" {
-    inline = [ 
-        "apt-get update",
-        "apt-get -y install nodejs npm pm2",
-        "git clone https://github.com/robertjhull/nuxt-cms /var/www/nuxt-cms",
-        "cd /var/www/nuxt-cms && npm install && npm run build",
-        "npm run start"
-     ]
-
+    script = "${path.module}/provision/install-deps.sh"
     connection {
         type = "ssh"
         user = "root"
         private_key = file(var.pvt_key)
-        host = self.ipv4_address
+        host = "${digitalocean_droplet.web.ipv4_address}"
         timeout = "2m"
     }
   }
+}
+
+resource "null_resource" "application" {
+    depends_on = [null_resource.dependencies]
+    connection {
+        type = "ssh"
+        user = "root"
+        private_key = file(var.pvt_key)
+        host = "${digitalocean_droplet.web.ipv4_address}"
+        timeout = "2m"
+    }
+    provisioner "remote-exec" {
+        inline = ["mkdir -p /apps/nuxt-cms"]
+    }
+    provisioner "file" {
+        source = "${path.module}/provision/ecosystem.config.json"
+        destination = "/apps/ecosystem.config.json"
+    }
+    provisioner "remote-exec" {
+        script = "${path.module}/provision/npm-install.sh"
+    }
 }
 
 resource "digitalocean_firewall" "nuxt_firewall" {
