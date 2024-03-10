@@ -4,7 +4,7 @@
   "description": "A CMS built in Nuxt.js with analytics features, leveraging cloud functions for the backend.",
   "main": "index.js",
   "scripts": {
-    "build": "nuxt build NUXT_TELEMETRY_DISABLED=1",
+    "build": "nuxt build",
     "dev": "nuxt dev",
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "generate": "nuxt generate",

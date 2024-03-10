@@ -28,7 +28,7 @@ resource "digitalocean_droplet" "web" {
   }
 
   provisioner "remote-exec" {
-    inline = "export NUXT_PRIVATE_DEFAULT_USER_ID=${var.default_user_id} NUXT_PRIVATE_FUNCTIONS_BASE_URL=${var.functions_base_url} NUXT_PRIVATE_FUNCTIONS_AUTH_TOKEN=${var.functions_auth_token}"
+    inline = ["export NUXT_PRIVATE_DEFAULT_USER_ID=${var.default_user_id} NUXT_PRIVATE_FUNCTIONS_BASE_URL=${var.functions_base_url} NUXT_PRIVATE_FUNCTIONS_AUTH_TOKEN=${var.functions_auth_token}"]
   }
 
   provisioner "remote-exec" {
