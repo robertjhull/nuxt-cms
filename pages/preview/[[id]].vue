@@ -58,7 +58,7 @@ watch(
         :src="settings.headerImage"
         gradient="to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.5)"
         width="100%"
-        height="15dvw"
+        height="12dvw"
         cover>
         <v-row class="fill-height align-center">
           <v-col class="text-center">

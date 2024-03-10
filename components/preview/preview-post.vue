@@ -16,10 +16,12 @@ const computedStyle = computed(() => {
 });
 
 const filteredComments = computed(() => {
-  return post.value.comments.filter((c) => {
-    c.status == "approved" && !c.parentCommentId;
-  });
+  return post.value.comments.filter(
+    (c) => c.status == "approved" && !c.parentCommentId
+  );
 });
+
+console.log(filteredComments.value);
 </script>
 
 <template>

@@ -114,6 +114,7 @@ onMounted(() => (selection.value = 0));
                 </td>
                 <td
                   style="
+                    max-width: 600px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -157,7 +158,15 @@ onMounted(() => (selection.value = 0));
               </tr>
               <tr v-if="item.expanded">
                 <td :colspan="12">
-                  {{ item.text }}
+                  <v-row>
+                    <v-spacer />
+                    <v-col
+                      cols="6"
+                      class="pl-8 my-2"
+                      >{{ item.text }}</v-col
+                    >
+                    <v-col cols="5"></v-col>
+                  </v-row>
                 </td>
               </tr>
             </template>

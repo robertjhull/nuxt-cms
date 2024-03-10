@@ -130,6 +130,7 @@ onMounted(() => (selection.value = 0));
                   <em v-if="item.published">{{
                     datePublished(item.published)
                   }}</em>
+                  <em v-else>{{ datePublished(item.created) }}</em>
                 </td>
                 <td width="10">
                   <nuxt-link :to="'/create/' + item._id">
