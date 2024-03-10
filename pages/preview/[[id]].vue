@@ -18,7 +18,7 @@ watch(
   async (newId) => {
     if (!newId) {
       const posts = await $fetch<Post[]>("/api/post");
-      publishedPosts.value = posts || [];
+      publishedPosts.value = posts.filter((p) => p.published) || [];
     } else {
       let storePost = postsStore.getPostById(newId as string);
       if (storePost) {

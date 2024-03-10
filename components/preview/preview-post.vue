@@ -14,6 +14,12 @@ const computedStyle = computed(() => {
     font-family: ${props.settings.fontFamily.value} !important;
   `;
 });
+
+const filteredComments = computed(() => {
+  return post.value.comments.filter((c) => {
+    c.status == "approved" && !c.parentCommentId;
+  });
+});
 </script>
 
 <template>
@@ -58,14 +64,14 @@ const computedStyle = computed(() => {
         }})
       </h2>
       <v-list
-        v-if="post.comments && post.comments.length"
+        v-if="filteredComments && filteredComments.length"
         class="bg-transparent"
         :style="computedStyle">
         <template
-          v-for="(comment, index) in post.comments"
+          v-for="(comment, index) in filteredComments"
           :key="comment._id">
           <preview-comment
-            v-model="post.comments[index]"
+            v-model="filteredComments[index]"
             :settings="settings" />
         </template>
       </v-list>

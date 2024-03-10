@@ -31,6 +31,7 @@ export interface Comment {
   _id: string;
   authorName: string;
   postTitle: string;
+  parentCommentId?: string;
   text: string;
   created: string;
   replies: Comment[];
