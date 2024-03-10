@@ -64,7 +64,9 @@ const computedStyle = computed(() => {
         <template
           v-for="(comment, index) in post.comments"
           :key="comment._id">
-          <preview-comment v-model="post.comments[index]" />
+          <preview-comment
+            v-model="post.comments[index]"
+            :settings="settings" />
         </template>
       </v-list>
     </v-sheet>

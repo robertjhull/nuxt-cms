@@ -27,7 +27,3 @@ const showAppBar = computed(() => {
     </v-layout>
   </v-app>
 </template>
-
-<style lang="scss">
-@use "~/assets/scss/main.scss";
-</style>

@@ -10,7 +10,7 @@ const { data: user, pending } = useAsyncData<User>("user-dashboard", () => {
 
 <template>
   <v-container
-    class="pa-0 ma-0 fill-height align-start"
+    class="pa-0 ma-0 fill-height align-start app-content"
     fluid>
     <div
       v-if="pending"
@@ -44,3 +44,7 @@ const { data: user, pending } = useAsyncData<User>("user-dashboard", () => {
     </v-row>
   </v-container>
 </template>
+
+<style lang="scss">
+@use "~/assets/scss/main.scss";
+</style>

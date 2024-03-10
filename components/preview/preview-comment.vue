@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import { mdiReply } from "@mdi/js";
-import type { Comment } from "~/interfaces";
+import type { Comment, Settings } from "~/interfaces";
 
 const comment = defineModel<Comment>({ required: true });
+const props = defineProps<{ settings: Settings }>();
+
 const { formatShortDate } = useFormattedDate();
 const format = (datetime: string): string => formatShortDate(datetime);
+
+const computedStyle = computed(() => {
+  return `
+    color: ${props.settings.textColor} !important;
+    font-size: ${props.settings.fontSize} !important;
+    font-family: ${props.settings.fontFamily.value} !important;
+  `;
+});
 </script>
 
 <template>
@@ -12,14 +22,18 @@ const format = (datetime: string): string => formatShortDate(datetime);
     class="comment my-2 py-2"
     elevation="1">
     <div class="pl-3">
-      <v-row no-gutters>
+      <v-row
+        no-gutters
+        :style="computedStyle">
         {{ comment.text }}
       </v-row>
       <v-row
         class="d-flex align-center"
         no-gutters>
         <v-col cols="10">
-          <div class="font-weight-thin">
+          <div
+            class="font-weight-thin"
+            :style="computedStyle">
             {{ comment.authorName }}
           </div>
           <div class="text-caption">
@@ -41,7 +55,9 @@ const format = (datetime: string): string => formatShortDate(datetime);
         <template
           v-for="(reply, index) in comment.replies"
           :key="index">
-          <preview-comment v-model="comment.replies[index]" />
+          <preview-comment
+            v-model="comment.replies[index]"
+            :settings="settings" />
         </template>
       </v-col>
     </v-row>

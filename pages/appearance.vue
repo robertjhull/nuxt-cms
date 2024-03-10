@@ -19,7 +19,7 @@ const color = ref("#FFA000");
 <template>
   <v-container
     fluid
-    class="pa-0 fill-height">
+    class="pa-0 fill-height app-content">
     <div
       v-if="pending"
       class="linear-progress-bar">
@@ -149,6 +149,10 @@ const color = ref("#FFA000");
     </v-card>
   </v-container>
 </template>
+
+<style lang="scss">
+@use "~/assets/scss/main.scss";
+</style>
 
 <style scoped lang="scss">
 .preview-pane {

@@ -29,7 +29,7 @@ const theme = useTheme();
     :color="
       theme.current.value.dark ? 'background-lighten-1' : 'background-darken-1'
     "
-    class="navigation-drawer">
+    class="navigation-drawer app-content">
     <v-list>
       <template
         v-for="(link, index) in navLinks"
@@ -52,3 +52,7 @@ const theme = useTheme();
     </v-list>
   </v-navigation-drawer>
 </template>
+
+<style lang="scss">
+@use "~/assets/scss/main.scss";
+</style>

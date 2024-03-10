@@ -50,7 +50,7 @@ onMounted(() => (selection.value = 0));
 
 <template>
   <v-container
-    class="pa-0 ma-0 fill-height"
+    class="pa-0 ma-0 fill-height app-content"
     fluid>
     <div
       v-if="pending"
@@ -146,3 +146,7 @@ onMounted(() => (selection.value = 0));
     </v-row>
   </v-container>
 </template>
+
+<style lang="scss">
+@use "~/assets/scss/main.scss";
+</style>
