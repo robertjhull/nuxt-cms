@@ -1,9 +1,12 @@
 #!/bin/bash
-sudo apt-get update
+set -euo pipefail
 
+sudo apt-get update -y
+sudo apt-get remove needrestart -y
+
+sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs npm
-
+apt-get install -y nodejs
 sudo npm install -g pm2
 
 sudo mkdir -p /app

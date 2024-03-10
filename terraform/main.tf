@@ -1,6 +1,9 @@
 variable "ssh_fingerprint" {}
 variable "pvt_key" {}
 variable "local_ipv4" {}
+variable "default_user_id" {}
+variable "functions_base_url" {}
+variable "functions_auth_token" {}
 
 data "digitalocean_ssh_key" "terraform" {
   name = "digitalocean-nuxt-ssh"
@@ -14,44 +17,31 @@ resource "digitalocean_droplet" "web" {
   ssh_keys = [
     data.digitalocean_ssh_key.terraform.fingerprint
   ]
-}
-
-resource "null_resource" "dependencies" {
-  triggers = {
-    deps_hash = "${filesha256("./provision/install-deps.sh")}"
-  }
 
   provisioner "remote-exec" {
     script = "${path.module}/provision/install-deps.sh"
-    connection {
-        type = "ssh"
-        user = "root"
-        private_key = file(var.pvt_key)
-        host = "${digitalocean_droplet.web.ipv4_address}"
-        timeout = "2m"
-    }
   }
-}
 
-resource "null_resource" "application" {
-    depends_on = [null_resource.dependencies]
-    connection {
-        type = "ssh"
-        user = "root"
-        private_key = file(var.pvt_key)
-        host = "${digitalocean_droplet.web.ipv4_address}"
-        timeout = "2m"
-    }
-    provisioner "remote-exec" {
-        inline = ["mkdir -p /apps/nuxt-cms"]
-    }
-    provisioner "file" {
-        source = "${path.module}/provision/ecosystem.config.json"
-        destination = "/apps/ecosystem.config.json"
-    }
-    provisioner "remote-exec" {
-        script = "${path.module}/provision/npm-install.sh"
-    }
+  provisioner "file" {
+    source = "${path.module}/provision/ecosystem.config.json"
+    destination = "/app/ecosystem.config.json"
+  }
+
+  provisioner "remote-exec" {
+    inline = "export NUXT_PRIVATE_DEFAULT_USER_ID=${var.default_user_id} NUXT_PRIVATE_FUNCTIONS_BASE_URL=${var.functions_base_url} NUXT_PRIVATE_FUNCTIONS_AUTH_TOKEN=${var.functions_auth_token}"
+  }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/provision/npm-install.sh"
+  }
+
+  connection {
+    type = "ssh"
+    user = "root"
+    private_key = file(var.pvt_key)
+    host = "${digitalocean_droplet.web.ipv4_address}"
+    timeout = "2m"
+  }
 }
 
 resource "digitalocean_firewall" "nuxt_firewall" {
