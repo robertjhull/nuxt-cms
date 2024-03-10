@@ -10,7 +10,6 @@ const {
   pending,
   saving,
   success,
-  error,
 } = useAppearanceSettings();
 const color = ref("#FFA000");
 </script>
@@ -26,7 +25,6 @@ const color = ref("#FFA000");
         color="primary"
         indeterminate />
     </div>
-    <div v-else-if="error">An error occurred: {{ error.message }}</div>
     <v-card
       v-else
       class="px-10 fill-height w-100"

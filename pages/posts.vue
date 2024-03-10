@@ -2,11 +2,7 @@
 import { mdiMagnify, mdiPencil, mdiPlusThick } from "@mdi/js";
 import type { Post } from "~/interfaces";
 
-const {
-  data: posts,
-  pending,
-  error,
-} = useAsyncData<Post[]>("posts-data", () => {
+const { data: posts, pending } = useAsyncData<Post[]>("posts-data", () => {
   return $fetch("/api/post");
 });
 
@@ -61,7 +57,6 @@ onMounted(() => (selection.value = 0));
         color="primary"
         indeterminate />
     </div>
-    <div v-else-if="error">An error occurred: {{ error.message }}</div>
     <v-row
       v-else
       class="fill-height w-100"

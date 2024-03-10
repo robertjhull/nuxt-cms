@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import type { User } from "~/interfaces";
 
-const {
-  data: user,
-  pending,
-  error,
-} = useAsyncData<User>("user-dashboard", () => {
+const { data: user, pending } = useAsyncData<User>("user-dashboard", () => {
   return $fetch("/api/dashboard");
 });
 </script>
@@ -21,7 +17,6 @@ const {
         color="primary"
         indeterminate />
     </div>
-    <div v-else-if="error">An error occured: {{ error.message }}</div>
     <v-row
       v-else
       class="d-flex justify-center mt-6">

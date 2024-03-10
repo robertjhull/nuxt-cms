@@ -2,13 +2,12 @@
 import { mdiCheck, mdiChevronDown, mdiChevronUp, mdiTrashCan } from "@mdi/js";
 import type { Comment } from "~/interfaces";
 
-const {
-  data: comments,
-  pending,
-  error,
-} = useAsyncData<Comment[]>("comments-data", () => {
-  return $fetch("/api/comment");
-});
+const { data: comments, pending } = useAsyncData<Comment[]>(
+  "comments-data",
+  () => {
+    return $fetch("/api/comment");
+  }
+);
 
 const tags = ["All", "Pending", "Approved", "Trash"];
 const selection = ref();
@@ -71,7 +70,6 @@ onMounted(() => (selection.value = 0));
         color="primary"
         indeterminate />
     </div>
-    <div v-else-if="error">An error occurred: {{ error.message }}</div>
     <v-row
       v-else
       class="fill-height w-100"
