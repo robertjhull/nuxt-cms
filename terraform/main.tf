@@ -1,9 +1,6 @@
 variable "ssh_fingerprint" {}
 variable "pvt_key" {}
 variable "local_ipv4" {}
-variable "default_user_id" {}
-variable "functions_base_url" {}
-variable "functions_auth_token" {}
 
 data "digitalocean_ssh_key" "terraform" {
   name = "digitalocean-nuxt-ssh"
@@ -25,10 +22,6 @@ resource "digitalocean_droplet" "web" {
   provisioner "file" {
     source = "${path.module}/provision/ecosystem.config.json"
     destination = "/app/ecosystem.config.json"
-  }
-
-  provisioner "remote-exec" {
-    inline = ["export NUXT_PRIVATE_DEFAULT_USER_ID=${var.default_user_id} NUXT_PRIVATE_FUNCTIONS_BASE_URL=${var.functions_base_url} NUXT_PRIVATE_FUNCTIONS_AUTH_TOKEN=${var.functions_auth_token}"]
   }
 
   provisioner "remote-exec" {

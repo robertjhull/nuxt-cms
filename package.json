@@ -1,12 +1,11 @@
 {
-  "name": "nuxt-cms-serverless",
+  "name": "nuxt-serverless",
   "version": "1.0.0",
-  "description": "A CMS built in Nuxt.js with analytics features, leveraging cloud functions for the backend.",
+  "description": "A demo CMS built with Nuxt and Vuetify, and utilizing cloud functions",
   "main": "index.js",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "start": "pm2-runtime start ecosystem.config.js --env production",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
