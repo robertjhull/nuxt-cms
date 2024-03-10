@@ -2,10 +2,18 @@
 import type { Post, Settings } from "~/interfaces";
 
 const post = defineModel<Post>({ required: true });
-defineProps<{ settings: Settings }>();
+const props = defineProps<{ settings: Settings }>();
 
 const { formatLongDate } = useFormattedDate();
 const datePublished = (datetime: string): string => formatLongDate(datetime);
+
+const computedStyle = computed(() => {
+  return `
+    color: ${props.settings.textColor} !important;
+    font-size: ${props.settings.fontSize} !important;
+    font-family: ${props.settings.fontFamily.value} !important;
+  `;
+});
 </script>
 
 <template>
@@ -15,11 +23,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
     :key="post._id">
     <header
       class="post-header"
-      :style="{
-        color: settings.textColor,
-        fontSize: settings.fontSize,
-        fontFamily: settings.fontFamily.value,
-      }">
+      :style="computedStyle">
       <div class="post-title">{{ post.title }}</div>
       <div class="post-subtitle">{{ post.subtitle }}</div>
       <div class="post-meta">
@@ -38,11 +42,7 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
     <div>
       <div
         class="post-content"
-        :style="{
-          color: settings.textColor,
-          fontSize: settings.fontSize,
-          fontFamily: settings.fontFamily.value,
-        }"
+        :style="computedStyle"
         v-html="post.content"></div>
     </div>
 
@@ -50,14 +50,17 @@ const datePublished = (datetime: string): string => formatLongDate(datetime);
 
     <!-- Comments Section -->
     <v-sheet class="bg-transparent">
-      <h2 class="px-4">
+      <h2
+        class="px-4"
+        :style="computedStyle">
         Comments ({{
           post.comments && post.comments.length ? post.comments.length : "0"
         }})
       </h2>
       <v-list
         v-if="post.comments && post.comments.length"
-        class="bg-transparent">
+        class="bg-transparent"
+        :style="computedStyle">
         <template
           v-for="(comment, index) in post.comments"
           :key="comment._id">
