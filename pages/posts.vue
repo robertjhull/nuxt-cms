@@ -2,6 +2,8 @@
 import { mdiMagnify, mdiPencil, mdiPlusThick } from "@mdi/js";
 import type { Post } from "~/interfaces";
 
+useHead({ title: "Posts" });
+
 const { data: posts, pending } = useAsyncData<Post[]>("posts-data", () => {
   return $fetch("/api/post");
 });

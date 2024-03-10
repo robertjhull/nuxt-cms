@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { User } from "~/interfaces";
 
+useHead({ title: "Dashboard" });
+
 const { data: user, pending } = useAsyncData<User>("user-dashboard", () => {
   return $fetch("/api/dashboard");
 });

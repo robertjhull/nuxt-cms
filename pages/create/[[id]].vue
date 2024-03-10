@@ -2,6 +2,8 @@
 import type { Post } from "~/interfaces";
 import ExtendedEditor from "~/utils/extendedEditor";
 
+useHead({ title: "Create Post" });
+
 const route = useRoute();
 const store = usePostsStore();
 const editor = ref<ExtendedEditor>();

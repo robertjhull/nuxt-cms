@@ -2,6 +2,8 @@
 import { mdiCheck, mdiChevronDown, mdiChevronUp, mdiTrashCan } from "@mdi/js";
 import type { Comment } from "~/interfaces";
 
+useHead({ title: "Comments" });
+
 const { data: comments, pending } = useAsyncData<Comment[]>(
   "comments-data",
   () => {

@@ -3,6 +3,8 @@ import { mdiCheckCircle } from "@mdi/js";
 import { ref } from "vue";
 import useAppearanceSettings from "~/composables/useAppearanceSettings";
 
+useHead({ title: "Settings" });
+
 const {
   settings,
   fontOptions,

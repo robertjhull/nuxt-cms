@@ -7,6 +7,8 @@ const route = useRoute();
 const postsStore = usePostsStore();
 const { settings } = useAppearanceSettings();
 
+useHead({ title: settings.value.pageTitle });
+
 const postId = computed(() => route.params.id as string | undefined);
 
 const publishedPosts = ref<Post[]>([]);
